@@ -51,14 +51,16 @@ Gerar o banco do projeto
 ```sh
 php artisan migrate:fresh --seed
 ```
-Conta para fazer login
+
 ```sh
+Acesse o projeto
+[http://localhost:8080](http://localhost:8080)
+
+Conta para fazer login
 RA/RP=12345678
 Senha=senha
 ```
 
-Acesse o projeto
-[http://localhost:8080](http://localhost:8080)
 
 Acesse o phpmyadmin
 [http://localhost:8081](http://localhost:8081)
