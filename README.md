@@ -52,10 +52,10 @@ Gerar o banco do projeto
 php artisan migrate:fresh --seed
 ```
 
-```sh
+
 Acesse o projeto
 [http://localhost:8080](http://localhost:8080)
-
+```sh
 Conta para fazer login
 RA/RP=12345678
 Senha=senha
