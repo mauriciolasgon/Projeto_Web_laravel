@@ -1,6 +1,10 @@
 
 # Laravel Template
-
+Feito por:
+Mauricio Lasca Gonçales
+Murilo Croce
+Gustavo Mota
+André Costa
 ### Passo a passo
 Clone Repositório criado a partir do template, entre na pasta e execute os comandos abaixo:
 
