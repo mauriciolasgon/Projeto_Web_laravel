@@ -1,0 +1,64 @@
+*{padding:0;margin: 0; box-sizing: border-box;}
+
+body{
+    height: 100vh;
+    display: flex ;
+    align-items: center;
+    justify-content: center;
+}
+
+.box_login{
+    width: 500px;
+    height: 800px;
+    background: #ffea2e;
+    border: 0;
+    border-radius:20px 20px 20px 20px ;
+}
+
+.box_login .capa{  
+    margin:40px 0px 0px 160px ;
+    width: 170px;
+    height: 267px;
+    background: url(../img/brasil.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+
+h1{
+    font-size: 36px;
+    font-family:Calibri;
+    color: #0035EF;
+    text-align:left;
+    margin: 40px 0px 0px 125px;
+    
+}
+
+form input{
+    margin: 25px 0px 0px 70px;   
+    width:calc(100% - 140px);
+    padding: 15px 10px;
+    border: 0;
+    border-radius: 20px 20px 20px 20px;
+    margin-bottom: 0px;
+    text-align: center;
+}
+
+form .btn-login{
+    width: 30%;
+    padding:10px 3px ;
+    margin:25px 0px 0px 175px;
+    border: 0;
+    border-radius: 20px 20px 20px 20px;
+    background:#0035EF ;
+    color:#dbef00
+}
+.box_login .ney{  
+    position: absolute;
+    margin:7px 0px 0px 175px ;
+    width: 143.64px;
+    height: 198.816px;
+    background: url(../img/neymar2.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}

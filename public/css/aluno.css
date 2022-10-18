@@ -1,0 +1,139 @@
+*{padding:0;margin: 0; box-sizing:border-box}
+
+body{   
+    
+    min-height: 100vh;
+    padding-bottom:100px ;
+    position: relative;
+}
+
+.box_background{
+    position: absolute;
+    width:1920px;
+    height: 1080px;
+    background-size: 100% 100%;
+    background: #2B2A2A;
+}
+html,body{
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.box_background .faixa{
+    position:absolute;
+    margin: 25px 0px 0px 0px;   
+    width: 1920px;
+    height: 80px;
+    background: #1A49EF;
+
+}
+
+
+.box_background .cartaz{
+   position: absolute;
+   margin: 125px 0px 0px 0px;
+   width: 1920px;
+   height: 855px;
+   background: url(../img/cartaz.jpg);
+   background-size: 100% 100%;
+   background-repeat: no-repeat;  
+}
+ 
+ h1{
+    position: absolute;
+    margin: 20px 0px 0px 750px;
+    font-size: 36px;
+    font-family:Calibri;
+    color: #fff;
+    text-align:center;   
+}
+.box_background .Barbie{
+    position: absolute;
+    margin: 330px 0px 0px 792px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/barbie1.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+
+ .box_background .Velozes_e_furiosos{
+    position: absolute;
+    margin: 330px 0px 0px 1440px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/velozes-e-furiozos.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+
+ .box_background .Jhon_Wick{
+    position: absolute;
+    margin: 330px 0px 0px 1440px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/john-wick.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+
+ .box_background .Barbie2{
+    position: absolute;
+    margin: 330px 0px 0px 144px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/barbie2.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+
+ .box_background .Barbie3{
+    position: absolute;
+    margin: 330px 0px 0px 144px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/barbie3.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+ .box_background .Barbie4{
+    position: absolute;
+    margin: 330px 0px 0px  1440px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/barbie4.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+
+ .box_background .Tropa_de_elite{
+    position: absolute;
+    margin: 330px 0px 0px 144px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/tropa-de-elite.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+
+ .box_background .Baby_drive{
+    position: absolute;
+    margin: 330px 0px 0px 792px;
+    width: 350px;
+    height: 490px;
+    background: url(../img/baby-driver.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;  
+ }
+ .h2{
+    position: absolute;
+    margin-top: 20px;
+    font-size: 36px;
+    font-family:Calibri;
+    color: white;
+    text-align:right;   
+}
+
+
+
