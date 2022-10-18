@@ -41,7 +41,15 @@ Gerar a key do projeto Laravel
 ```sh
 php artisan key:generate
 ```
-
+Gerar o banco do projeto 
+```sh
+php artisan migrate:fresh --seed
+```
+Conta para fazer login
+```sh
+RA/RP=12345678
+Senha=senha
+```
 
 Acesse o projeto
 [http://localhost:8080](http://localhost:8080)
@@ -49,11 +57,4 @@ Acesse o projeto
 Acesse o phpmyadmin
 [http://localhost:8081](http://localhost:8081)
 
-API de categorias e filmes:
-https://www.learn-laravel.cf/
 
-Rotas:
-- (get) /categories
-- (get) /category/{id}
-- (get) /movies
-- (get) /movie/{id}
