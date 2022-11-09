@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('estado');
             $table->string('filmes');
             $table->string('cursos')->index();
+            $table->integer('identificador');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

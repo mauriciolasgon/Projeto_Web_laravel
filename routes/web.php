@@ -25,3 +25,14 @@ Route::get('/registro',[UsuarioController::class,'verifica'])->name('registro');
 Route::post('/verifica',[UsuarioController::class,'verifica'])->name('verifica');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/admin',[LoginController::class,'showProfLoginForm'])->name('prof.login-view');
+Route::post('/admin',[LoginController::class,'ProfLogin'])->name('prof.login');
+
+#Route::get('/admin/register',[RegisterController::class,'showAdminRegisterForm'])->name('admin.register-view');
+#Route::post('/admin/register',[RegisterController::class,'createAdmin'])->name('admin.register');
+
+Route::get('/teste', [App\Http\Controllers\HomeController::class, 'index'])->name('teste');
+Route::get('/admin/dashboard',function(){
+    return view('home');
+})->middleware('auth:professor');

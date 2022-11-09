@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Professor;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -39,6 +40,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:professor');
     }
 
     /**
@@ -64,10 +66,36 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        if($data['profissao']=='aluno') {
+            return User::create([
+                'name' => $data['name'],
+                'CPF' => $data['CPF'],
+                'email' => $data['email'],
+                'cep' =>$data['cep'],
+                'filmes' =>$data['filmes'],
+                'rua' =>$data['rua'],
+                'cidade' =>$data['cidade'],
+                'bairro' =>$data['bairro'],
+                'estado' =>$data['estado'],
+                'cursos' =>'vazio',
+                'identificador' =>0,
+                'password' => Hash::make($data['password']),
+            ]);
+        }
+        else  
+            return Professor::create([
+                'name' => $data['name'],
+                'CPF' => $data['CPF'],
+                'email' => $data['email'],
+                'cep' =>$data['cep'],
+                'rua' =>$data['rua'],
+                'cidade' =>$data['cidade'],
+                'bairro' =>$data['bairro'],
+                'estado' =>$data['estado'],
+                'curso' =>'vazio',
+                'identificador' =>1,
+                'password' => Hash::make($data['password']),
+            ]);
     }
+
 }

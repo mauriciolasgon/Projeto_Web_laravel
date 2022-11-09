@@ -8,9 +8,12 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                
-                <form method="POST" action="{{route('verifica')}}">
-                    @csrf
+                @isset($route)
+                        <form method="POST" action="{{ $route }}">
+                    @else
+                        <form method="POST" action="{{ route('verifica') }}">
+                    @endisset
+                        @csrf
                         <div class="row mb-3">
                             <label for="profissao" class="col-md-4 col-form-label text-md-end">{{ __('Profissão') }}</label>
 

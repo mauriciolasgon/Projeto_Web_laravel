@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'professor'=> [
+            'driver' => 'session',
+            'provider' => 'professores',
+        ]
     ],
 
     /*
@@ -64,6 +68,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'professores' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Professor::class,
+        ]
+
 
         // 'users' => [
         //     'driver' => 'database',
@@ -93,7 +102,14 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-    ],
+        'professores' => [
+            'provider' => 'professores',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+    
+   ],
 
     /*
     |--------------------------------------------------------------------------
