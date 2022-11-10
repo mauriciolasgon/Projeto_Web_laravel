@@ -8,19 +8,16 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                @isset($route)
-                        <form method="POST" action="{{ $route }}">
-                    @else
-                        <form method="POST" action="{{ route('verifica') }}">
-                    @endisset
-                        @csrf
+                
+                <form method="POST" action="{{route('verifica')}}">
+                    @csrf
                         <div class="row mb-3">
                             <label for="profissao" class="col-md-4 col-form-label text-md-end">{{ __('Profissão') }}</label>
 
                             <div class="col-md-6">
                             <select id="profissoes" name="profissao">
-			                    <option value="professor">Professor</option>
-			                    <option value="aluno">Aluno</option>
+			                    <option value="Professor">Professor</option>
+			                    <option value="Aluno">Aluno</option>
                             </select>
                             <button type="submit" class="btn btn-primary" >Selecionar</button>
                             </div>
@@ -29,7 +26,7 @@
 
                     <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    @if($prof=='aluno')
+                    @if($prof=='Aluno')
                     <div class="row mb-3">
                      <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Ocupação') }}</label>
                         <div class="col-md-6">

@@ -8,12 +8,11 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                @isset($route)
-                        <form method="POST" action="{{ $route }}">
-                    @else
-                        <form method="POST" action="{{ route('login') }}">
-                    @endisset
-                    
+                @if($aux==0)
+                <form method="POST" action="{{ route('professores.logar') }}">
+                @else
+                    <form method="POST" action="{{ route('login') }}">
+                @endif    
                         @csrf
 
                         <div class="row mb-3">
