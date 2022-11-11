@@ -1,0 +1,89 @@
+Olá Pessoal,
+
+Seguindo o que foi comentado em sala de aula, gostaria de propor um trabalho final que reúna tudo o que vimos até o momento em nossa matéria, para tal, o tema escolhido é próximo ao que já vínhamos trabalhando, portanto, a problemática é:
+
+Sou uma escola de educação técnica de informática.
+Ofereço cursos online aos alunos, apenas cursos avulsos, sem trilhas ou relacionamento entre os cursos.
+Necessito de um sistema para facilitar o trabalho da secretaria da minha escola.
+A respeito do sistema, leve em consideração:
+
+[Login] O sistema pode ser acessado pela secretaria, pelo professor e pelo aluno. Sistema de login com permissão de visualização.
+Gerar e guardar um acesso administrativo que terá permissão de acessar tudo no sistema.
+Gerar e guardar um usuário para a secretaria.
+Não há a necessidade de ter o sistema de recuperação de senha (caso tenha, será considerado um bônus).
+Deve existir a possibilidade de troca de senha.
+Não há a necessidade de uso de e-mails para confirmar informações, caso haja, também será considerado um bônus.
+
+[Definições Gerais] Informações gerais e regras de negócio:
+Matrícula dos alunos.
+Informações que esses alunos informam para a secretaria são:
+Nome Completo
+CPF
+Endereço da moradia (Usar API para preenchimento automático do endereço. Item não obrigatório, mas serve de bônus, exemplo aqui Links to an external site.).
+Um filme de preferência do aluno.
+Usuário oficial para acessar o sistema.
+Senha de acesso
+Data e hora do ultimo acesso ao sistema.
+O aluno pode se matricular em quantas matérias ele quiser, sem restrições.
+O aluno não possui um avatar associado ao seu usuário.
+Registro de professores.
+Informações que devem ser registradas para o professor estar habilitado na escola.
+Nome completo
+CPF
+Endereço de moradia
+Usuário oficial para acessar o sistema.
+Senha de acesso
+Data e hora do ultimo acesso ao sistema.
+Escolher entre os avatares pré-definidos no sistema.
+Para este trabalho, considerar que todos os professores estão habilitados a assumir qualquer curso, sem restrições.
+O professor pode assumir N cursos.
+Registro de cursos:
+Os cursos possuem as seguintes informações:
+Nome completo do curso.
+Descrição completa
+Descrição simplificada.
+Número mínimo de alunos matriculado.
+Número máximo de alunos matriculados.
+Status ("Matrículas Abertas - Mínimo de alunos não atingido!", "Matrículas Abertas - Curso acontecerá!", "Matrículas Encerradas")
+Escolher uma imagem para representar o curso. Essa imagem deve ser escolhida entre as disponíveis no sistema para essa finalidade.
+O curso deve ser criado sem a relação professores e alunos.
+Os cursos só podem ter um professor.
+Pode-se ter a troca desse professor a qualquer momento.
+Pode-se retirar um professor do curso, sem necessariamente colocar outro no lugar, deixando a matéria sem professor atribuído.
+Enquanto o curso estiver sem professor atribuído, apresentar a seguinte mensagem no lugar do nome do professor: "Sem atribuição de professor até o momento!"
+Os cursos podem ter 0 ou mais alunos matriculados.
+Não deixar matricular mais alunos do que o número máximo cadastrado, quando chegar nesse número de matrículas, o status deve ser mudado para "Matrículas Encerradas", conforme regra de negócios.
+Enquanto estiver com número de matrícula abaixo do número mínimo, deixar disponível o sistema de matrícula e o status adequado, após passar pelo número mínimo, mudar o status.
+
+[Permissões] Acesso ao sistema:
+O aluno tem permissão para:
+Atualizar seu cadastro. Incluindo a troca de senha.
+Ver a relação de cursos ofertados (ter acesso ao nome, descrição simplificada e completa).
+Matricular-se (e tb se desmatricular) em qualquer curso que ele queira e que ele possa (cursos com matrícula ativa).
+Ver a relação de todos os cursos que ele está matriculado e suas respectivas notas (até aquele momento).
+O professor tem permissão para:
+Atualizar seu cadastro. Incluindo a troca de senha e de avatar.
+Ver a lista de cursos que ele está ministrando.
+Ao selecionar um curso, ele deve ter a possibilidade de:
+Verificar a lista de nomes dos alunos matriculados.
+Atribuir médias finais a todos os alunos.
+A secretaria tem permissão para:
+CRUD de alunos, professores e cursos.
+Listar os cursos e:
+Encerrar o período de matrícula de forma manual, independente do número de inscritos.
+CRUD do professor em um curso.
+Matricular manualmente quantos alunos ela quiser ao curso.
+Verificar a média final de todos alunos.
+Adicionalmente ela pode ver:
+Média geral de todas as médias.
+Quantidade de alunos aprovados (médias finais maiores e iguais à 5,0) junto com a % que esse número representa no curso.
+Quantidade de alunos reprovados (médias finais menores de 5,0) junto com a % que esse número representa no curso.
+Qualquer detalhe que eu tenha esquecido, por favor, pergunte-me em sala de aula ou pelo chat do Teams.
+
+O trabalho deve ser feito em grupos de no máximo 6 (seis) pessoas.
+
+A entrega deve ser feita através do link de um repositório do git (GitHub ou GitLab), onde encontrarei instruções para subir o(s) container(s) em minha máquina e ter acesso a todo o projeto desenvolvido por vocês.
+
+Data de entrega final do trabalho no CANVAS será 27 de novembro de 2022 (23h59). Na verdade, a entrega no CANVAS pode ocorrer antes disso, o mais importante é não ter nenhuma atualização no git depois desse dia e hora. A respeito do código, eu analisarei única e exclusivamente o que estiver disponível em uma Release Oficial de uma versão fechada (v1, v2 ou .... ).
+
+Farei um cronograma de apresentação em sala de aula, ou seja, nas aulas seguintes, cada um dos grupos fará a apresentação de seus trabalhos, esse cronograma fecharei nas próximas aulas, vocês saberão antecipadamente quando acontecerá sua apresentação.
