@@ -17,7 +17,6 @@ class AuthenticateProfessors
      */
     public function handle(Request $request, Closure $next)
     {
-
         if(Auth::guard('professor')->check() == false) {
             return redirect()->route('professores.login');
         }

@@ -19,7 +19,7 @@ class ProfessorController extends Controller
         // $cliente->save();
         $aux=0;
 
-        return view('/auth/login',['aux'=>$aux]);
+        return view('/auth/login',['aux'=>$aux,'name'=>"vazio"]);
 
 
 
@@ -31,9 +31,9 @@ class ProfessorController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::guard('professor')->attempt($credentials)) {
+        if (Auth::guard('professor')->attempt($credentials)) {;
             $request->session()->regenerate();
-            return redirect()->intended('home');
+            return redirect()->intended('professores/dashboard/lo');
         }
         return back()->withErrors([
             'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
@@ -42,20 +42,22 @@ class ProfessorController extends Controller
     }
 
 
-    public function dashboard(){
-
-        return view('home');
+    public function dashboard($user)
+    {
+        $nome=$user;
+        dd($nome);
+        return view('home',['name'=>'Certo']);
     }
 
     public function logout(Request $request)
     {
-        Auth::guard('professores')->logout();
+        Auth::guard('professor')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect('/auth/login');
+        return redirect('/professores/login');
     }
-    //
+
 }

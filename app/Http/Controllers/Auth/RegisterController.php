@@ -9,6 +9,9 @@ use App\Models\Professor;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -40,7 +43,6 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware('guest:professor');
     }
 
     /**
@@ -66,7 +68,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if($data['profissao']=='aluno') {
+        if($data['profissao']=='Aluno') {
             return User::create([
                 'name' => $data['name'],
                 'CPF' => $data['CPF'],
@@ -98,4 +100,39 @@ class RegisterController extends Controller
             ]);
     }
 
+
+
+    // Registra professores
+    public function profregister(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->profguard('professor')->login($user);
+        return $this->profregistered($request, $user)
+            ?: redirect()->intended('professores/dashboard/{{$user}}');
+    }
+
+     /**
+     * Get the guard to be used during registration.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function profguard()
+    {   
+        return Auth::guard();
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function profregistered(Request $request, $user)
+    {
+        //
+    }
 }

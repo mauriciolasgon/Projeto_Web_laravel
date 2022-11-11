@@ -23,10 +23,10 @@
                             </div>
                         </div>
                     </form>    
-
+                    @if($prof=='Aluno')
                     <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    @if($prof=='Aluno')
+                    
                     <div class="row mb-3">
                      <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Ocupação') }}</label>
                         <div class="col-md-6">
@@ -183,7 +183,8 @@
                         </div>
 
                        @else
-
+                <form method="POST" action="{{ route('prof.register') }}">
+                @csrf
                     <div class="row mb-3">
                      <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Ocupação') }}</label>
                         <div class="col-md-6">
@@ -324,8 +325,7 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
-                      
-                    @endif
+                @endif 
                             <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

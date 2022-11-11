@@ -5,6 +5,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfessorController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +26,15 @@ Route::get('/Alunos/{aluno}', [UsuarioController::class, 'show_aluno'])->name('a
 Route::get('/registro',[UsuarioController::class,'verifica'])->name('registro');
 Route::post('/verifica',[UsuarioController::class,'verifica'])->name('verifica');
 
+
+# Autenticação da tabela professors
 Route::get('/professores/login', [ProfessorController::class, 'login'])->name('professores.login');
 Route::post('/professores/logar', [ProfessorController::class, 'logar'])->name('professores.logar');
 Route::post('/professores/logout', [ProfessorController::class, 'logout'])->name('professores.logout');
-Route::get('/professores/dashboard', [ProfessorController::class, 'dashboard'])->name('professores.dashboard')->middleware('auth.professores');
+Route::get('/professores/dashboard/{user}', [ProfessorController::class, 'dashboard'])->name('professores.dashboard')->middleware('auth.professores');
+
+# Cadastro na tabela professors
+Route::post('/prof/register', [App\Http\Controllers\Auth\RegisterController::class,'profregister'])->name('prof.register');
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

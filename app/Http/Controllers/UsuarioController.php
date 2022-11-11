@@ -14,9 +14,10 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+     public function index()
     {
-        return view('/auth/register');
+        return view('auth/register');
         //
     }
 
@@ -134,8 +135,9 @@ class UsuarioController extends Controller
 
     public function verifica(Request $dados)
     {
+        $nome="vazio";
         $prof = $dados->profissao;
-        return view('auth/register',['prof'=>$prof]);
+        return view('auth/register',['prof'=>$prof,'name'=>$nome]);
         
     }
 }
