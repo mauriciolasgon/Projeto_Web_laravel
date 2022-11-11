@@ -41,6 +41,6 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $aux=1;
-        return view('auth/login',['aux'=>$aux]);
+        return view('auth/login',['aux'=>$aux,'user'=>'vazio']);
     }
 }

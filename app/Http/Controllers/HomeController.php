@@ -24,8 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {       
-        $usuario=User::all();
-        $nome=$usuario->name;
-        return view('home',['name'=>$nome]);
+
+        return view('home',['name'=>'aqui']);
     }
 }
