@@ -39,8 +39,11 @@ Route::get('/professores/dashboard/{user}', [ProfessorController::class, 'dashbo
 # Cadastro na tabela professors
 Route::post('/prof/register', [App\Http\Controllers\Auth\RegisterController::class,'profregister'])->name('prof.register');
 
-# Rota para a página do curso
-Route::get('/curso/{curso}/{identificador}/{name}',[CursoController::class,'index'])->name('curso');
+# Rota da página do curso
+Route::get('/curso/{curso}/{user}/{name}',[CursoController::class,'index'])->name('curso');
+Route::get('/integrantes',[CursoController::class,'integrantes']);
+
+Route::get('/back',[CursoController::class,'back']);
 
 # Inscrever alunos no curso
 Route::get('/add/aluno/{nome}/{curso}',[CursoController::class,'AddAlunos'])->name('add.aluno');
@@ -48,3 +51,4 @@ Auth::routes();
 Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+# ARRUMAR REGISTRO DE ALUNOS

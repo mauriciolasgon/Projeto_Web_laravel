@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
-    public function index($id,$identificador,$name)
+
+    public function index($id,$user,$name,)
     {
+        $user=json_decode($user);
+        dd($user);
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
         foreach($cursos as $aux)
@@ -19,12 +22,12 @@ class CursoController extends Controller
             }
         }
 
-       return view('curso',['curso'=>$curso,'identificador'=>$identificador,'name'=>$name]);
+       return view('curso',['curso'=>$curso,'user'=>$user]);
     }
     //
     public function AddAlunos($nome,$cursoid)
     {
-        $alunos=[];
+ 
         $cursos=Curso::all();
         for($i=0;$i<count($cursos);$i++)
         {
@@ -33,17 +36,41 @@ class CursoController extends Controller
                 $curso=$cursos[$i];
             }
         }
-        array_push($alunos, $curso->alunos);
+        $alunos=$curso->alunos;
+        $alunos=explode(';',$alunos);
         foreach($alunos as $aluno)
         {
             if($aluno==$nome)
             {
-                dd('erro');
+                return redirect()->back();
             }
-            array_push($alunos, $nome);
         }
+        array_push($alunos, $nome);
+        $alunos=implode(";", $alunos);
+       
         Curso::find($cursoid)->update(['alunos' => $alunos]);
+
+        return redirect()->back();
        
         #terminar essa função
+    }
+    public function back()
+    {
+        return redirect()->back();
+    }
+
+    public function integrantes($cursoid)
+    {
+         
+        $cursos=Curso::all();
+        for($i=0;$i<count($cursos);$i++)
+        {
+            if($cursos[$i]->id == $cursoid)
+            {  
+                $curso=$cursos[$i];
+            }
+        }
+
+
     }
 }

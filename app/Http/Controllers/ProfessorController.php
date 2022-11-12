@@ -56,9 +56,30 @@ class ProfessorController extends Controller
 
 
     public function dashboard($user)
-    {
+    {   
+
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
+        
+        if($cursos!=0)
+        {
+            foreach($cursos as $curso)
+            {
+                array_push($participantes,$curso->alunos);
+            }   
+            
+            foreach($participantes as $participante)
+            {
+                $aux=explode(';',$participante);
+                $aux=count($aux);
+                array_push($numero_participantes,$aux);
+            }
+        }
+        else
+        {
+            $numero_participantes=0;
+        }
+        
         $user=json_decode($user);
         $name=$user->name;
 

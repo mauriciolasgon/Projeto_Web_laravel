@@ -81,6 +81,7 @@ class RegisterController extends Controller
                 'estado' =>$data['estado'],
                 'cursos' =>'vazio',
                 'identificador' =>0,
+                'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
         }
@@ -96,6 +97,7 @@ class RegisterController extends Controller
                 'estado' =>$data['estado'],
                 'curso' =>'vazio',
                 'identificador' =>1,
+                'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
     }
