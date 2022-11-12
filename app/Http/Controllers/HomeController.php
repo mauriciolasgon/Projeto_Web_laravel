@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Curso;
 
 class HomeController extends Controller
 {
@@ -22,9 +23,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {       
-
-        return view('home',['name'=>'aqui']);
+    public function index($user)
+    {      
+        $cursos=Curso::all();
+        $cursos=json_decode($cursos);
+        $user=json_decode($user);
+        $name=$user->name;
+        
+        return view('home',['name'=>$name,'user'=>$user,'cursos'=>$cursos]);
     }
 }

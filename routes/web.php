@@ -6,6 +6,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\CursoController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +39,12 @@ Route::get('/professores/dashboard/{user}', [ProfessorController::class, 'dashbo
 # Cadastro na tabela professors
 Route::post('/prof/register', [App\Http\Controllers\Auth\RegisterController::class,'profregister'])->name('prof.register');
 
+# Rota para a página do curso
+Route::get('/curso/{curso}/{identificador}/{name}',[CursoController::class,'index'])->name('curso');
+
+# Inscrever alunos no curso
+Route::get('/add/aluno/{nome}/{curso}',[CursoController::class,'AddAlunos'])->name('add.aluno');
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 

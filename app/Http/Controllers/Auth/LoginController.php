@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,8 +29,34 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
 
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+
+        $usuarios=User::all();
+        foreach($usuarios as $usuario)
+        {
+            if($usuario->email == $credentials['email'])
+            {
+                
+                $user=$usuario;
+            }
+
+        }
+            
+        if (Auth::guard()->attempt($credentials)) {;
+            $request->session()->regenerate();
+            return redirect()->intended("/home/{$user}");
+        }
+        return back()->withErrors([
+            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
+        ])->onlyInput('email');
+    }
     /**
      * Create a new controller instance.
      *
@@ -41,6 +70,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $aux=1;
-        return view('auth/login',['aux'=>$aux,'user'=>'vazio']);
+
+        return view('auth/login',['aux'=>$aux,'name'=>'vazio']);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Professor;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Curso;
 
 class ProfessorController extends Controller
 {
@@ -18,8 +19,7 @@ class ProfessorController extends Controller
         // $cliente->password = Hash::make("12345678");
         // $cliente->save();
         $aux=0;
-
-        return view('/auth/login',['aux'=>$aux,'user'=>"vazio"]);
+        return view('/auth/login',['aux'=>$aux,'name'=>'vazio']);
 
 
 
@@ -57,8 +57,12 @@ class ProfessorController extends Controller
 
     public function dashboard($user)
     {
+        $cursos=Curso::all();
+        $cursos=json_decode($cursos);
+        $user=json_decode($user);
+        $name=$user->name;
 
-        return view('home',['user'=>$user]);
+        return view('home',['user'=>$user,'name'=>$name,'cursos'=>$cursos]);
     }
 
     public function logout(Request $request)
