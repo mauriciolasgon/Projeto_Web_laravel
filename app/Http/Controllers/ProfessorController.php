@@ -57,7 +57,8 @@ class ProfessorController extends Controller
 
     public function dashboard($user)
     {   
-
+        $participantes=[];
+        $numero_participantes=[];
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
         
@@ -79,11 +80,11 @@ class ProfessorController extends Controller
         {
             $numero_participantes=0;
         }
-        
+        $jsonUser=$user;
         $user=json_decode($user);
         $name=$user->name;
 
-        return view('home',['user'=>$user,'name'=>$name,'cursos'=>$cursos]);
+        return view('home',['name'=>$name,'user'=>$user,'cursos'=>$cursos,'NumParticipantes'=>$numero_participantes,'jsonUser'=>$jsonUser]);
     }
 
     public function logout(Request $request)

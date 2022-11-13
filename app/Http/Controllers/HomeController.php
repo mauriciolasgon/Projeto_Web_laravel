@@ -15,6 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        
         $this->middleware('auth');
     }
 
@@ -49,10 +50,10 @@ class HomeController extends Controller
             $numero_participantes=0;
         }
 
+        $jsonUser=$user;
         $user=json_decode($user);
         $name=$user->name;
-        $jsonUser=json_encode($user);
-        
+
         return view('home',['name'=>$name,'user'=>$user,'cursos'=>$cursos,'NumParticipantes'=>$numero_participantes,'jsonUser'=>$jsonUser]);
     }
 }

@@ -41,14 +41,19 @@ Route::post('/prof/register', [App\Http\Controllers\Auth\RegisterController::cla
 
 # Rota da página do curso
 Route::get('/curso/{curso}/{user}/{name}',[CursoController::class,'index'])->name('curso');
-Route::get('/integrantes',[CursoController::class,'integrantes']);
+Route::get('/integrantes/{userId}',[CursoController::class,'showIntegrantesView']);
 
 Route::get('/back',[CursoController::class,'back']);
 
 # Inscrever alunos no curso
-Route::get('/add/aluno/{nome}/{curso}',[CursoController::class,'AddAlunos'])->name('add.aluno');
+Route::get('/add/aluno/{user}/{curso}',[CursoController::class,'AddAlunos'])->name('add.aluno');
+
+# Remover alunos do curso
+Route::get('/remove/aluno/{cursoId}/{user}',[CursoController::class,'removeAlunos'])->name('remove.aluno');
+
 Auth::routes();
-Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');;
 
 
 # ARRUMAR REGISTRO DE ALUNOS
+# NAO AUTENTICAR QUANDO REGISTRAR

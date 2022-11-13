@@ -144,7 +144,7 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                 @if($NumParticipantes[$i]<'4')
-                <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{0}}">
+                <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{$name}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Numero de inscritos insuficiente</button>
@@ -152,7 +152,7 @@
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Fechado</button>
                   @else
-                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$user->identificador}}/{{$name}}">
+                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{$name}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Aberto</button>

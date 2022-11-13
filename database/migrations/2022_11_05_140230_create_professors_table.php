@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('estado');
             $table->string('curso')->index();
             $table->integer('identificador');
-            $table->integer('matriculas');
+            $table->string('matriculas');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
