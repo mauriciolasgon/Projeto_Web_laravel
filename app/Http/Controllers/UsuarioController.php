@@ -23,7 +23,7 @@ class UsuarioController extends Controller
 
     public function welcome()
     {
-
+            
         return view('welcome');
         //
     }

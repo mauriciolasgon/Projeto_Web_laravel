@@ -26,6 +26,7 @@ class HomeController extends Controller
      */
     public function index($user)
     {    
+        
         $participantes=[];
         $numero_participantes=[];
         $aux=[];
@@ -49,7 +50,6 @@ class HomeController extends Controller
         {
             $numero_participantes=0;
         }
-
         $jsonUser=$user;
         $user=json_decode($user);
         $name=$user->name;

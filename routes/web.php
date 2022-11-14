@@ -29,6 +29,8 @@ Route::get('/Alunos/{aluno}', [UsuarioController::class, 'show_aluno'])->name('a
 Route::get('/registro',[UsuarioController::class,'verifica'])->name('registro');
 Route::post('/verifica',[UsuarioController::class,'verifica'])->name('verifica');
 
+# Rota aluno registrado
+Route::get('/auth/login',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
 
 # Autenticação da tabela professors
 Route::get('/professores/login', [ProfessorController::class, 'login'])->name('professores.login');
@@ -52,7 +54,7 @@ Route::get('/add/aluno/{user}/{curso}',[CursoController::class,'AddAlunos'])->na
 Route::get('/remove/aluno/{cursoId}/{user}',[CursoController::class,'removeAlunos'])->name('remove.aluno');
 
 Auth::routes();
-Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');;
+Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
 # ARRUMAR REGISTRO DE ALUNOS

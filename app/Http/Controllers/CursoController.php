@@ -115,6 +115,7 @@ class CursoController extends Controller
         return redirect()->back();
     }
 
+    //Vai para a pagina de integrantes do curso
     public function showIntegrantesView($cursoid)
     {
 
@@ -126,7 +127,11 @@ class CursoController extends Controller
                 $curso=$cursos[$i];
             }
         }
-        
+        $users=User::all();
+        foreach($users as $aux)
+        {
+            
+        }
         $alunos=$curso->alunos;
         $alunos=explode(';',$alunos);
         return view('Alunos.aluno',['alunos'=>$alunos]);

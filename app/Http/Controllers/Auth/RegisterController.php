@@ -103,6 +103,18 @@ class RegisterController extends Controller
     }
 
 
+    public function register(Request $request)
+    {
+        dd('aq');
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect()->intended('home/{{$user}}');
+    }
 
     // Registra professores
     public function profregister(Request $request)
