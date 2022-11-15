@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Materia;
+use App\Models\Avatar;
 
 
 class UsuarioController extends Controller
@@ -138,7 +139,16 @@ class UsuarioController extends Controller
     {
         $nome="vazio";
         $prof = $dados->profissao;
-        return view('auth/register',['prof'=>$prof,'name'=>$nome]);
+        if($prof=='Professor')
+        {
+            $avatares=Avatar::all();
+            return view('auth/registerProf',['prof'=>$prof,'name'=>$nome,'avatares'=>$avatares]);
+        }
+        else
+        {
+            return view('auth/register',['prof'=>$prof,'name'=>$nome]);
+        }
         
     }
+    
 }

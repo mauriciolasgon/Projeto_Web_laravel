@@ -33,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -97,6 +97,7 @@ class RegisterController extends Controller
                 'estado' =>$data['estado'],
                 'curso' =>'vazio',
                 'identificador' =>1,
+                'avatar'=>$data['avatar'],
                 'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
@@ -105,7 +106,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        dd('aq');
+        
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
@@ -113,7 +114,7 @@ class RegisterController extends Controller
         $this->guard()->login($user);
 
         return $this->registered($request, $user)
-            ?: redirect()->intended('home/{{$user}}');
+            ?: redirect()->intended("/home/{$user}");
     }
 
     // Registra professores

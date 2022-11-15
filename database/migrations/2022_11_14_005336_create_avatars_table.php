@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('avatar_professors', function (Blueprint $table) {
+        Schema::create('avatars', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('imagem');
+            $table->string('path');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('avatar_professors');
+        Schema::dropIfExists('avatars');
     }
 };

@@ -59,3 +59,4 @@ Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index']
 
 # ARRUMAR REGISTRO DE ALUNOS
 # NAO AUTENTICAR QUANDO REGISTRAR
+# ARRUMAR LOGIN DE ALUNOS

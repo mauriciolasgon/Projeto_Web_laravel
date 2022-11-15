@@ -29,6 +29,7 @@ class Professor extends Authenticatable
         'curso',
         'identificador',
         'matriculas',
+        'avatar',
     ];
 
     /**

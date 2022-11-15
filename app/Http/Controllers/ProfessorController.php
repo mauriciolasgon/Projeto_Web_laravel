@@ -43,10 +43,9 @@ class ProfessorController extends Controller
             }
 
         }
-            
         if (Auth::guard('professor')->attempt($credentials)) {;
             $request->session()->regenerate();
-            return redirect()->intended("professores/dashboard/{$user}");
+            return redirect()->intended("/professores/dashboard/{$user}");
         }
         return back()->withErrors([
             'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',

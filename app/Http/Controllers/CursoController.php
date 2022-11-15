@@ -39,6 +39,7 @@ class CursoController extends Controller
         }
         $matriculado=0;
         $matriculas=explode(';',$matriculas);
+        $profs=Professor::all();
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
         // Acha o curso selecionado
@@ -61,7 +62,20 @@ class CursoController extends Controller
         {
             $matriculado=3;
         }
-       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser]);
+        //pega o avatar o professor que leciona a matéria
+        foreach($profs as $prof)
+        {
+            if($prof->name==$curso->docentes)
+            {
+                $img=$prof->avatar;
+            }
+            else
+            {
+                $img="img\avatarProf\avatar-padrão.png";
+            }
+        }
+
+       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img]);
     }
     //
     public function AddAlunos($user,$cursoid)
