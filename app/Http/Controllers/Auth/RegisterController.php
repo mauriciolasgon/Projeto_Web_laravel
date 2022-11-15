@@ -104,15 +104,13 @@ class RegisterController extends Controller
     }
 
 
-    public function register(Request $request)
-    {
-        
+    public function Alregister(Request $request)
+    {  
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
-
+        $this->Alguard()->login($user);
         return $this->registered($request, $user)
             ?: redirect()->intended("/home/{$user}");
     }
@@ -135,6 +133,12 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
     protected function profguard()
+    {   
+        return Auth::guard();
+    }
+
+    //Nao autentica usuario quando registra
+    protected function ALguard()
     {   
         return Auth::guard();
     }

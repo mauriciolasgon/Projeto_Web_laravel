@@ -39,12 +39,23 @@ class HomeController extends Controller
                 array_push($participantes,$curso->alunos);
             }   
             
+            
+            
             foreach($participantes as $participante)
             {
-                $aux=explode(';',$participante);
-                $aux=count($aux);
-                array_push($numero_participantes,$aux);
+                if($participante==NULL)
+                {
+                    array_push($numero_participantes,0);
+                }
+                else
+                {
+                    $aux=explode(';',$participante);
+                    $aux=count($aux);
+                    array_push($numero_participantes,$aux);
+                }
+                    
             }
+
         }
         else
         {

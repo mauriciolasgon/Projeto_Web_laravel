@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('curso');
             $table->string('descriçao_simplificada');
             $table->string('descrição_completa');
-            $table->string('alunos')->index(); 
+            $table->string('alunos')->nullable()->index(); 
             $table->string('docentes')->index();
         });
     }

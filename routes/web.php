@@ -29,8 +29,9 @@ Route::get('/Alunos/{aluno}', [UsuarioController::class, 'show_aluno'])->name('a
 Route::get('/registro',[UsuarioController::class,'verifica'])->name('registro');
 Route::post('/verifica',[UsuarioController::class,'verifica'])->name('verifica');
 
-# Rota aluno registrado
-Route::get('/auth/login',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm']);
+# Rota registro de aluno
+Route::get('/auth/login',[App\Http\Controllers\Auth\LoginController::class,'showLoginForm'])->name('auth.aluno');
+Route::post('/aluno/register',[App\Http\Controllers\Auth\RegisterController::class,'Alregister'])->name('aluno.register');
 
 # Autenticação da tabela professors
 Route::get('/professores/login', [ProfessorController::class, 'login'])->name('professores.login');

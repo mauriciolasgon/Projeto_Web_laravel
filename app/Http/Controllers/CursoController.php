@@ -74,7 +74,6 @@ class CursoController extends Controller
                 $img="img\avatarProf\avatar-padrão.png";
             }
         }
-
        return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img]);
     }
     //
