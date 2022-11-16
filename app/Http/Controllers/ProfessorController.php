@@ -21,8 +21,6 @@ class ProfessorController extends Controller
         $aux=0;
         return view('/auth/login',['aux'=>$aux,'name'=>'vazio']);
 
-
-
     }
 
     public function logar(Request $request){
