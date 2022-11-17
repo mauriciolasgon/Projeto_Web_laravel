@@ -31,6 +31,7 @@ class User extends Authenticatable
         'cursos',
         'identificador',
         'matriculas',
+        'avatar',
     ];
 
     /**

@@ -144,7 +144,7 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                 @if($NumParticipantes[$i]<'4')
-                <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{$name}}">
+                <form method="GET" action="/curso/{{$cursos[$i]->id}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Numero de inscritos insuficiente</button>

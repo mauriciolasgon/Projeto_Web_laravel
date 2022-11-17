@@ -76,15 +76,15 @@
     <link href={{ asset( "css/list-groups.css" ) }} rel="stylesheet">
   </head>
   <body>
-    @foreach($alunos as $aluno)
+@for($i=0; $i< count($alunos);$i++)
   <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
   <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="" checked>
   <label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios1">
-    {{$aluno}}
-    <span class="d-block small opacity-50">With support text underneath to add more detail</span>
+    {{$alunos[$i]}}
+    <span class="d-block small opacity-50">Filmes favoritos: {{$filmes[$i]}}</span>
   </label>
 </div>
-@endforeach
+@endfor
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
       

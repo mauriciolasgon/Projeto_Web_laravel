@@ -23,10 +23,11 @@ return new class extends Migration
             $table->string('bairro');
             $table->string('cidade');
             $table->string('estado');
-            $table->string('filmes');
+            $table->string('filmes')->nullable();
             $table->string('cursos')->index();
             $table->integer('identificador');
             $table->string('matriculas');
+            $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

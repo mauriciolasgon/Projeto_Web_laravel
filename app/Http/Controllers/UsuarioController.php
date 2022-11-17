@@ -15,16 +15,14 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-     public function index()
+    public function index()
     {
-        return view('auth/register');
+        return view('/auth/register');
         //
     }
 
     public function welcome()
     {
-            
         return view('welcome');
         //
     }
@@ -45,18 +43,7 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $usuario= new User;
-
-        $usuario->nome= $request->nome;
-        $usuario->filmes= $request->filmes;
-        
-        $event->save();
-
-        return redirect('/');
-        //
-    }
+    
 
     /**
      * Display the specified resource.
@@ -137,18 +124,21 @@ class UsuarioController extends Controller
 
     public function verifica(Request $dados)
     {
-        $nome="vazio";
+        
         $prof = $dados->profissao;
         if($prof=='Professor')
         {
             $avatares=Avatar::all();
-            return view('auth/registerProf',['prof'=>$prof,'name'=>$nome,'avatares'=>$avatares]);
+            return view('auth/registerProf',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares]);
         }
         else
         {
-            return view('auth/register',['prof'=>$prof,'name'=>$nome]);
+            return view('auth/register',['prof'=>$prof,'name'=>'vazio']);
         }
         
     }
+
+   
+
     
 }

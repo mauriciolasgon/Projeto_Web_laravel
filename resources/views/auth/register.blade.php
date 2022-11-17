@@ -23,7 +23,7 @@
                             </div>
                         </div>
                     </form>    
-                    <form method="POST" action="{{ route('aluno.register') }}">
+                    <form method="POST" action="{{ route('register') }}">
                     @csrf
                     
                     <div class="row mb-3">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Curso;
 use App\Models\User;
-use App\Models\Professor;
+use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Http\Request;
@@ -11,23 +11,18 @@ use Illuminate\Http\Request;
 class CursoController extends Controller
 {
 
-    public function index($id,$user,$name,)
+    public function index($id)
     {
+        $user=Auth::user();
+        $name=$user->name;
         $jsonUser=$user;
         $user=json_decode($user);
         //cria vetor das matriculas do aluno
         $matriculas=$user->matriculas;
         //atualiza a pagina com informações do banco de dados
-        
-        if($user->identificador==1)
-        {
+    
+        $usuarios=User::all(); 
 
-            $usuarios=Professor::all(); 
-        }
-        else
-        {
-            $usuarios=User::all(); 
-        }
         //cria vetor das matriculas do aluno
         foreach($usuarios as $usuario)
         {
@@ -39,7 +34,6 @@ class CursoController extends Controller
         }
         $matriculado=0;
         $matriculas=explode(';',$matriculas);
-        $profs=Professor::all();
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
         // Acha o curso selecionado
@@ -50,37 +44,42 @@ class CursoController extends Controller
                 $curso=$aux;
             }
         }
-        // Determina se o usuario esta matriculado ou lecionando
+        // Determina se o usuario esta matriculado/lecionando
         foreach($matriculas as $matricula)
         {
             if($matricula==$curso->id)
             {
                 $matriculado=1;
+                
             }
         }
-        if($curso->docentes!=$user->name and $curso->docentes!="vazio")
-        {
-            $matriculado=3;
-        }
+        if($user->id==1)
+            if($curso->docentes!=$user->name and $curso->docentes!="vazio")
+            {
+                $matriculado=3;
+            }
         //pega o avatar o professor que leciona a matéria
-        foreach($profs as $prof)
+        $img="img\avatarProf\avatar-padrão.png";
+        foreach($usuarios as $usuario)
         {
-            if($prof->name==$curso->docentes)
+            if($usuario->identificador==1)
             {
-                $img=$prof->avatar;
-            }
-            else
-            {
-                $img="img\avatarProf\avatar-padrão.png";
+                if($curso->docentes==$usuario->name)
+                {
+                    $img=$usuario->avatar;
+                }
+                
             }
         }
        return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img]);
     }
     //
-    public function AddAlunos($user,$cursoid)
+    public function AddAlunos($cursoid)
     {
+
+        $user=Auth::user();
         //matricula alunos e atribui professores aos cursos
-        $user=json_decode($user);
+        $alunos=[];
         $nome=$user->name;
         $matriculas=$user->matriculas;
         $matriculas=explode(';',$matriculas); 
@@ -96,13 +95,17 @@ class CursoController extends Controller
         
         if($user->identificador==0)
         {
-            $alunos=$curso->alunos;
-            $alunos=explode(';',$alunos);
-            foreach($alunos as $aluno)
+            if($curso->alunos!=NULL)
             {
-                if($aluno==$nome)
+                $alunos=$curso->alunos;
+                $alunos=explode(';',$alunos);
+            
+                foreach($alunos as $aluno)
                 {
-                    return redirect()->back();
+                    if($aluno==$nome)
+                    {
+                        return redirect()->back();
+                    }
                 }
             }
             array_push($alunos, $nome);
@@ -116,7 +119,7 @@ class CursoController extends Controller
         {
             $matriculas=implode(";", $matriculas);
             Curso::find($cursoid)->update(['docentes'=> $user->name]);
-            Professor::find($user->id)->update(['matriculas' => $matriculas]);
+            User::find($user->id)->update(['matriculas' => $matriculas]);
         }
         
         return redirect()->back();
@@ -131,7 +134,7 @@ class CursoController extends Controller
     //Vai para a pagina de integrantes do curso
     public function showIntegrantesView($cursoid)
     {
-
+        $filmes=[];
         $cursos=Curso::all();
         for($i=0;$i<count($cursos);$i++)
         {
@@ -140,18 +143,26 @@ class CursoController extends Controller
                 $curso=$cursos[$i];
             }
         }
+        // Pega os filmes de cada aluno
         $users=User::all();
-        foreach($users as $aux)
-        {
-            
-        }
         $alunos=$curso->alunos;
         $alunos=explode(';',$alunos);
-        return view('Alunos.aluno',['alunos'=>$alunos]);
+        foreach($alunos as $aluno)
+        {
+            foreach($users as $user)
+            {
+                if($aluno==$user->name)
+                {
+                    array_push($filmes,$user->filmes);
+                }
+            }
+        } 
+        return view('Alunos.aluno',['alunos'=>$alunos,'filmes'=>$filmes]);
     }
 
-    public function removeAlunos($cursoId,$jsonUser)
+    public function removeAlunos($cursoId)
     {
+        $user=Auth::user();
         //Remove a matricula do aluno e do professor
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
@@ -162,8 +173,6 @@ class CursoController extends Controller
                 $curso=$aux;
             }
         }
-        
-        $user=json_decode($jsonUser);
         
         if($user->identificador==0)
         {
@@ -200,9 +209,10 @@ class CursoController extends Controller
         }
         else
         {
-            Professor::find($user->id)->update(['matriculas' => $matriculas]);
+            User::find($user->id)->update(['matriculas' => $matriculas]);
         }
 
         return redirect()->back();
     }
+
 }

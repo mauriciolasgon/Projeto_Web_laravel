@@ -82,11 +82,12 @@ class RegisterController extends Controller
                 'cursos' =>'vazio',
                 'identificador' =>0,
                 'matriculas'=>0,
+                'avatar'=>NULL,
                 'password' => Hash::make($data['password']),
             ]);
         }
         else  
-            return Professor::create([
+            return User::create([
                 'name' => $data['name'],
                 'CPF' => $data['CPF'],
                 'email' => $data['email'],
@@ -95,8 +96,9 @@ class RegisterController extends Controller
                 'cidade' =>$data['cidade'],
                 'bairro' =>$data['bairro'],
                 'estado' =>$data['estado'],
-                'curso' =>'vazio',
+                'cursos' =>'vazio',
                 'identificador' =>1,
+                'filmes'=>NULL,
                 'avatar'=>$data['avatar'],
                 'matriculas'=>0,
                 'password' => Hash::make($data['password']),
@@ -104,54 +106,4 @@ class RegisterController extends Controller
     }
 
 
-    public function Alregister(Request $request)
-    {  
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        $this->Alguard()->login($user);
-        return $this->registered($request, $user)
-            ?: redirect()->intended("/home/{$user}");
-    }
-
-    // Registra professores
-    public function profregister(Request $request)
-    {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        $this->profguard('professor')->login($user);
-        return $this->profregistered($request, $user)
-            ?: redirect()->intended('professores/dashboard/{{$user}}');
-    }
-
-     /**
-     * Get the guard to be used during registration.
-     *
-     * @return \Illuminate\Contracts\Auth\StatefulGuard
-     */
-    protected function profguard()
-    {   
-        return Auth::guard();
-    }
-
-    //Nao autentica usuario quando registra
-    protected function ALguard()
-    {   
-        return Auth::guard();
-    }
-
-    /**
-     * The user has been registered.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function profregistered(Request $request, $user)
-    {
-        //
-    }
 }

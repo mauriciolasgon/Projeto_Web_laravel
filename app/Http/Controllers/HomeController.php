@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Curso;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        
         $this->middleware('auth');
     }
 
@@ -24,9 +24,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index($user)
-    {    
-        
+    public function index()
+    {
+        $user=Auth::user();
         $participantes=[];
         $numero_participantes=[];
         $aux=[];
@@ -61,10 +61,9 @@ class HomeController extends Controller
         {
             $numero_participantes=0;
         }
-        $jsonUser=$user;
         $user=json_decode($user);
-        $name=$user->name;
 
-        return view('home',['name'=>$name,'user'=>$user,'cursos'=>$cursos,'NumParticipantes'=>$numero_participantes,'jsonUser'=>$jsonUser]);
+        return view('home',['user'=>$user,'cursos'=>$cursos,'NumParticipantes'=>$numero_participantes]);
     }
+
 }

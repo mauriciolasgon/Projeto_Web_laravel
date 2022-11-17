@@ -93,7 +93,7 @@
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$jsonUser}}/{{$curso->id}}">Inscrever-se</a>
+          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}">Inscrever-se</a>
         </li>
         @endif  
       @else
@@ -103,7 +103,7 @@
         </li>
         @elseif($matriculado==0)
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$jsonUser}}/{{$curso->id}}">Lecionar</a>
+          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}">Lecionar</a>
         </li>
         @else
         <li class="nav-item">
@@ -131,7 +131,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/remove/aluno/{{$curso->id}}/{{$jsonUser}}">Desmatricular-se</a></li>
+            <li><a class="dropdown-item" href="/remove/aluno/{{$curso->id}}">Desmatricular-se</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
@@ -147,11 +147,7 @@
 
 <div class="nav-scroller bg-body shadow-sm">
   <nav class="nav" aria-label="Secondary navigation">
-    @if($user->identificador==0)
-    <a class="nav-link active" aria-current="page" href="/home/{{$jsonUser}}">Voltar</a>
-    @else
-    <a class="nav-link active" aria-current="page" href="/professores/dashboard/{{$jsonUser}}">Voltar</a>
-    @endif
+    <a class="nav-link active" aria-current="page" href="/home">Voltar</a>
     <a class="nav-link" href="#">
       Friends
       <span class="badge text-bg-light rounded-pill align-text-bottom">27</span>

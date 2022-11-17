@@ -17,6 +17,7 @@ class usuarios extends Seeder
      */
     public function run()
     {
- 
+       
+        //
     }
 }
