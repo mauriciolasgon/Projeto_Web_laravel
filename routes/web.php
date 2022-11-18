@@ -35,6 +35,9 @@ Route::get('/integrantes/{userId}',[CursoController::class,'showIntegrantesView'
 # Inscrever alunos no curso
 Route::get('/add/aluno/{user}',[CursoController::class,'AddAlunos'])->name('add.aluno');
 
+# Redefinir senha
+Route::get('/redefinir/senha',[App\Http\Controllers\HomeController::class,'redefinirSenha']);
+
 # Remover alunos do curso
 Route::get('/remove/aluno/{cursoId}',[CursoController::class,'removeAlunos'])->name('remove.aluno');
 

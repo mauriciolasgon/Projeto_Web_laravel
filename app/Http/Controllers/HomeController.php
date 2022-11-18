@@ -66,4 +66,9 @@ class HomeController extends Controller
         return view('home',['user'=>$user,'cursos'=>$cursos,'NumParticipantes'=>$numero_participantes]);
     }
 
+    public function redefinirSenha()
+    {
+        return view('auth.passwords.reset');
+    }
+
 }
