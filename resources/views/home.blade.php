@@ -81,19 +81,24 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
+          @if($user->identificador==0)
           <h4 class="text-white">Filmes favoritos</h4>
           <p class="text-muted">{{$user->filmes}}</p>
+          @else
+          <h4 class="text-white">{{$user->name}}</h4>
+          <img  src= {{ asset( $user->avatar ) }} alt="avatar">
+        @endif
         </div>
         <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
+          <h4 class="text-white">Perfil</h4>
           <ul class="list-unstyled">
             @if($user->identificador==1)
-            <li><a href="#" class="text-white">Perfil Prof</a></li>
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
             <li><a href="#" class="text-white">Ver cursos</a></li>
             <li><a href="#" class="text-white">Email me</a></li>
             @endif
             @if($user->identificador==0)
-            <li><a href="redefinir/senha" class="text-white">Redefinir senha</a></li>
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
             <li><a href="#" class="text-white">Ver cursos</a></li>
             <li><a href="#" class="text-white">Email me</a></li>
             @endif
@@ -144,7 +149,7 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                 @if($NumParticipantes[$i]<'4')
-                <form method="GET" action="/curso/{{$cursos[$i]->id}}">
+                <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Numero de inscritos insuficiente</button>
@@ -152,7 +157,7 @@
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Fechado</button>
                   @else
-                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{$name}}">
+                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Aberto</button>

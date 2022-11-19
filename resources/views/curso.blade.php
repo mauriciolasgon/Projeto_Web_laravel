@@ -176,75 +176,91 @@
   </div>
 
   <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0">Recent updates</h6>
+    <h6 class="border-bottom pb-2 mb-0">Sobre o curso:</h6>
     <div class="d-flex text-muted pt-3">
-      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-
+ 
       <p class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">@username</strong>
-        Some representative placeholder content, with some information about this user. Imagine this being some sort of status update, perhaps?
+        {{$curso->descrição_completa}}
       </p>
     </div>
     <div class="d-flex text-muted pt-3">
-      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#e83e8c"/><text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text></svg>
 
-      <p class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">@username</strong>
-        Some more representative placeholder content, related to this other user. Another status update, perhaps.
-      </p>
-    </div>
-    <div class="d-flex text-muted pt-3">
-      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#6f42c1"/><text x="50%" y="50%" fill="#6f42c1" dy=".3em">32x32</text></svg>
-
-      <p class="pb-3 mb-0 small lh-sm border-bottom">
-        <strong class="d-block text-gray-dark">@username</strong>
-        This user also gets some representative placeholder content. Maybe they did something interesting, and you really want to highlight this in the recent updates.
-      </p>
-    </div>
-    <small class="d-block text-end mt-3">
-      <a href="#">All updates</a>
-    </small>
   </div>
-
+@if($user->identificador==0)
   <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0">Suggestions</h6>
+    <h6 class="border-bottom pb-2 mb-0">Notas</h6>
     <div class="d-flex text-muted pt-3">
       <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
 
       <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between">
-          <strong class="text-gray-dark">Full Name</strong>
-          <a href="#">Follow</a>
+          <strong class="text-gray-dark">Prova 1</strong>
+
         </div>
         <span class="d-block">@username</span>
       </div>
     </div>
     <div class="d-flex text-muted pt-3">
       <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-
+    </div>
       <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between">
-          <strong class="text-gray-dark">Full Name</strong>
-          <a href="#">Follow</a>
+          <strong class="text-gray-dark">Atividade</strong>
         </div>
         <span class="d-block">@username</span>
       </div>
     </div>
     <div class="d-flex text-muted pt-3">
       <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-
+      </div>
       <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between">
-          <strong class="text-gray-dark">Full Name</strong>
-          <a href="#">Follow</a>
+          <strong class="text-gray-dark">Prova 2</strong>
+          
         </div>
         <span class="d-block">@username</span>
       </div>
     </div>
-    <small class="d-block text-end mt-3">
-      <a href="#">All suggestions</a>
-    </small>
   </div>
+  @elseif($user->identificador==1)
+  @if($aux==0)
+  <form method="GET" action="/medias/{{$curso->id}}/{{1}}">
+  @else
+  <form method="POST" action="/atribui/medias/{{$alunosAux}}/{{$curso->id }}">
+  @endif
+  @csrf
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">Notas</h6>
+  <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Aluno</th>
+            <th scope="col">Média</th>
+            @if($aux==0) 
+            <th scope="col"><button class="btn btn-outline-success" type="submit">Alterar médias</button></th>
+            @else
+            <th scope="col"><button class="btn btn-outline-success" type="submit">Atribuir médias</button></th>
+            @endif
+          </tr>
+        </thead>
+    <tbody>
+      @for($i=0;$i< count($alunos);$i++)
+          <tr>
+            <td>{{$alunos[$i]}}</td>
+            @if($aux==0)
+            <td>0</td>
+            @else
+            <td><input id="name" type="number"  name="{{$i}}" value="{{ old('$i') }}"></td>
+            @endif
+          </tr>
+          
+      @endfor
+    </tbody>
+    </div> 
+    </form>     
+  @endif
+
 </main>
 
 

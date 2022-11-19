@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -66,9 +67,21 @@ class HomeController extends Controller
         return view('home',['user'=>$user,'cursos'=>$cursos,'NumParticipantes'=>$numero_participantes]);
     }
 
-    public function redefinirSenha()
-    {
-        return view('auth.passwords.reset');
+    public function redefinirBlade(Request $email)
+    {   
+        $user=Auth::user();
+        
+        return view('auth.passwords.reset',['user'=>$user,'aux'=>$email->email]);
     }
 
+    public function redefinirSenha(Request $password)
+    {
+        $password=Hash::make($password->password);
+        
+        $user=Auth::user();
+        
+        User::find($user->id)->update(['password' => $password]);
+        return redirect('/home');
+
+    }
 }

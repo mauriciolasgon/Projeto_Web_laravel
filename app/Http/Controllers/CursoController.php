@@ -4,28 +4,40 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
-
 use Illuminate\Http\Request;
+
 
 class CursoController extends Controller
 {
 
-    public function index($id)
+    public function index($id,$aux2)
     {
+
         $user=Auth::user();
         $name=$user->name;
         $jsonUser=$user;
         $user=json_decode($user);
         //cria vetor das matriculas do aluno
         $matriculas=$user->matriculas;
+        
+        // Acha o curso selecionado
+        $cursos=Curso::all();
+        $cursos=json_decode($cursos);
+        
+        foreach($cursos as $aux)
+        {
+            if($id == $aux->id)
+            {
+                $curso=$aux;
+            }
+        }
         //atualiza a pagina com informações do banco de dados
     
         $usuarios=User::all(); 
 
         //cria vetor das matriculas do aluno
         foreach($usuarios as $usuario)
-        {
+        {   
             if($usuario->id == $user->id)
             {
                 $matriculas=$usuario->matriculas;
@@ -34,16 +46,7 @@ class CursoController extends Controller
         }
         $matriculado=0;
         $matriculas=explode(';',$matriculas);
-        $cursos=Curso::all();
-        $cursos=json_decode($cursos);
-        // Acha o curso selecionado
-        foreach($cursos as $aux)
-        {
-            if($id == $aux->id)
-            {
-                $curso=$aux;
-            }
-        }
+
         // Determina se o usuario esta matriculado/lecionando
         foreach($matriculas as $matricula)
         {
@@ -71,7 +74,11 @@ class CursoController extends Controller
                 
             }
         }
-       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img]);
+        // pega os alunos do curso
+        $alunos=explode(';',$curso->alunos);
+        $alunosAux=implode(';',$alunos);
+
+       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux]);
     }
     //
     public function AddAlunos($cursoid)
@@ -114,6 +121,7 @@ class CursoController extends Controller
             
             Curso::find($cursoid)->update(['alunos' => $alunos]);
             User::find($user->id)->update(['matriculas' => $matriculas]);
+            User::find($user->id)->update(['medias' => "$cursoid:"]);
         }
         else
         {
@@ -213,6 +221,52 @@ class CursoController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function alteraMedias(Request $newMedias,$alunos,$cursoid)
+    {       
+            $novaMedia=[];
+            foreach($newMedias as $newMedia)
+            {
+                array_push($novaMedia,$newMedia);
+            }
+            dd($novaMedia);
+            $users=User::all();
+            $medias=[];
+            
+            $alunos=explode(';',$alunos); 
+            foreach($users as $user)
+            {
+                foreach($alunos as $aluno)
+                {
+                    if($aluno==$user->name)
+                    {
+                        $medias=$user->medias;
+                        $medias=explode(";",$medias);
+                        $medias=implode(":",$medias);
+                        $medias=explode(":",$medias);
+                        for($i=0;$i<((count($medias)/2)-1);$i+=2)
+                        {
+                            if($medias[$i]==$cursoid)
+                            {
+                                $media[$i+1];
+                            }
+                        }
+                        dd($medias);
+                        
+                    }
+                    
+                }
+            }
+            
+        dd($medias);
+            for($i=0;$i<count($alunos);$i++)
+            {
+                $medias=explode(";",$medias[$i]);
+
+            }
+            
+
     }
 
 }
