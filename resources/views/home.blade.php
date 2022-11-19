@@ -134,26 +134,36 @@
   <div class="album py-5 bg-light">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      @foreach($cursos as $curso)
+      @for($i=0;$i< count($cursos);$i++)
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{$curso->curso}}</text></svg>
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{$cursos[$i]->curso}}</text></svg>
 
             <div class="card-body">
-              <p class="card-text">{{$curso->descriçao_simplificada}}</p>
+              <p class="card-text">{{$cursos[$i]->descriçao_simplificada}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                <form method="GET" action="/curso/{{$curso->id}}/{{$user->identificador}}/{{$name}}">
+                @if($NumParticipantes[$i]<'4')
+                <form method="GET" action="/curso/{{$cursos[$i]->id}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Status</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Numero de inscritos insuficiente</button>
+                  @elseif($NumParticipantes[$i]>'10')
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Fechado</button>
+                  @else
+                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{$name}}">
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                </form>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Aberto</button>
+                  @endif
                 </div>
-                <small class="text-muted">Nº de participantes</small>
+                <small class="text-muted">Quantidade de inscritos:{{$NumParticipantes[$i]}}</small>
               </div>
             </div>
           </div>
         </div>
-        @endforeach
+        @endfor
       </div>
     </div>
   </div>

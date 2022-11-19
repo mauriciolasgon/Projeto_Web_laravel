@@ -7,9 +7,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CursoController;
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,22 +26,17 @@ Route::get('/Alunos/{aluno}', [UsuarioController::class, 'show_aluno'])->name('a
 Route::get('/registro',[UsuarioController::class,'verifica'])->name('registro');
 Route::post('/verifica',[UsuarioController::class,'verifica'])->name('verifica');
 
+// Rotas da pagina do curso
+Route::get('/curso/{id}',[CursoController::class,'index'])->name('curso');
 
-# Autenticação da tabela professors
-Route::get('/professores/login', [ProfessorController::class, 'login'])->name('professores.login');
-Route::post('/professores/logar', [ProfessorController::class, 'logar'])->name('professores.logar');
-Route::post('/professores/logout', [ProfessorController::class, 'logout'])->name('professores.logout');
-Route::get('/professores/dashboard/{user}', [ProfessorController::class, 'dashboard'])->name('professores.dashboard')->middleware('auth.professores');
-
-# Cadastro na tabela professors
-Route::post('/prof/register', [App\Http\Controllers\Auth\RegisterController::class,'profregister'])->name('prof.register');
-
-# Rota para a página do curso
-Route::get('/curso/{curso}/{identificador}/{name}',[CursoController::class,'index'])->name('curso');
+// View dos alunos do curso
+Route::get('/integrantes/{userId}',[CursoController::class,'showIntegrantesView']);
 
 # Inscrever alunos no curso
-Route::get('/add/aluno/{nome}/{curso}',[CursoController::class,'AddAlunos'])->name('add.aluno');
+Route::get('/add/aluno/{user}',[CursoController::class,'AddAlunos'])->name('add.aluno');
+
+# Remover alunos do curso
+Route::get('/remove/aluno/{cursoId}',[CursoController::class,'removeAlunos'])->name('remove.aluno');
+
 Auth::routes();
-Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

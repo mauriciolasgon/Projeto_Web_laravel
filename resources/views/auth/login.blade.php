@@ -8,11 +8,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                @if($aux==0)
-                <form method="POST" action="{{ route('professores.logar') }}">
-                @else
                     <form method="POST" action="{{ route('login') }}">
-                @endif    
                         @csrf
 
                         <div class="row mb-3">

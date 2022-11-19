@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+<style>  
+img{
+  background-color: #ddd;
+  border-radius: 50%;
+  height: 200px;
+  object-fit: cover;
+  width: 200px;  
+}
+</style>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -16,21 +26,40 @@
 
                             <div class="col-md-6">
                             <select id="profissoes" name="profissao">
+                            <option value="Professor">Professor</option>
                                 <option value="Aluno">Aluno</option>
-			                    <option value="Professor">Professor</option>
+			                    
                             </select>
                             <button type="submit" class="btn btn-primary" >Selecionar</button>
                             </div>
                         </div>
-                    </form>    
-                    <form method="POST" action="{{ route('register') }}">
+                    </form>  
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    
-                    <div class="row mb-3">
+                <div class="col-lg-4">
+                <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">   
+                 <h2 class="fw-normal">Avatar</h2>
+                    <p></p>
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Selecione um Avatar
+                        </a>
+                            
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        @foreach($avatares as $avatar)
+                        <div class="col-lg-4">
+                        <img  src= {{ asset( $avatar->path) }} alt="avatar">   
+                        <input id="avatar" type="checkbox"  name="avatar" value={{ $avatar->path }} >
+                        </div>
+                        @endforeach
+                        </div>
+                    </li>
+                    </div>
+                <div class="row mb-3">
                      <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Ocupação') }}</label>
                         <div class="col-md-6">
                         <input id="profissao" type="text" class="form-control @error('profissao') is-invalid @enderror" name="profissao" value="{{ $prof }}" required autocomplete="profissao" autofocus>
-                        <div class="row mb-3">
+                       <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 
                             <div class="col-md-6">
@@ -146,20 +175,6 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="filems" class="col-md-4 col-form-label text-md-end">{{ __('Movies') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="filmes" type="text"  class="form-control @error('Estado') is-invalid @enderror" name="filmes" value="{{ old('filmes') }}" required autocomplete="filmes">
-
-                                @error('filmes')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
@@ -194,3 +209,4 @@
         </div>
     </div>
 </div>
+<script src={{ asset('js/avatar.js') }}></script>

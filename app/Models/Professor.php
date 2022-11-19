@@ -27,7 +27,6 @@ class Professor extends Authenticatable
         'bairro',
         'estado',
         'curso',
-        'identificador',
     ];
 
     /**

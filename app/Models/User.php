@@ -30,6 +30,8 @@ class User extends Authenticatable
         'estado',
         'cursos',
         'identificador',
+        'matriculas',
+        'avatar',
     ];
 
     /**
