@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Materia;
+use App\Models\Avatar;
 
 
 class UsuarioController extends Controller
@@ -16,17 +17,13 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $search = request('search');
-            if($search){
-                $materia = Materia::where([
-                    ['materias', 'like', '%'.$search.'%']
-                ])->get();
-                
-        }   else {
-                $materia = Materia::all();
-        }
-        $aux = '';
-        return view('welcome',['search'=>$search, 'aux'=>$aux,'materias'=>$materia]);
+        return view('/auth/register01');
+        //
+    }
+
+    public function welcome()
+    {
+        return view('login');
         //
     }
 
@@ -46,18 +43,7 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $usuario= new User;
-
-        $usuario->nome= $request->nome;
-        $usuario->filmes= $request->filmes;
-        
-        $event->save();
-
-        return redirect('/');
-        //
-    }
+    
 
     /**
      * Display the specified resource.
@@ -135,4 +121,24 @@ class UsuarioController extends Controller
     {
         //
     }
+
+    public function verifica(Request $dados)
+    {
+        
+        $prof = $dados->profissao;
+        if($prof=='Professor')
+        {
+            $avatares=Avatar::all();
+            return view('auth/register01',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares]);
+        }
+        else
+        {
+            return view('auth/register01',['prof'=>$prof,'name'=>'vazio']);
+        }
+        
+    }
+
+   
+
+    
 }

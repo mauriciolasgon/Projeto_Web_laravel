@@ -1,0 +1,53 @@
+
+* { box-sizing: border-box;}
+
+html, body { height: 100%; }
+
+
+
+body{
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 0 24px;
+    background-color: #2a2a2a;
+    background-size: 2000px 1000px;
+    background-position: 0;
+    color: rgb(8, 7, 8);
+    font-family: "Euclid Circular A";
+   
+}
+
+.caixa {
+    width: 90%;
+    margin: 0px 0px 0px 0px;
+    width:800px ;
+    height: 900px;
+    border-radius: 20px;
+    background: #ffffff;
+    
+}
+
+
+ h2 {
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0 0 4px;
+    color: white;
+}
+
+ h3{
+    color: rgba(255, 255, 255, 0.38);
+    margin: 0 0 20px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.caixa .faixa {
+    position:absolute;
+    width: 800px;
+    height: 100px;  
+    background: #0aff02;
+    
+
+}

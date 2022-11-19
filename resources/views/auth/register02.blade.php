@@ -23,7 +23,7 @@
 </span>
 </div>
 <button type="submit">LOGIN</button>
-<a href="/registro">
+<a href="http://localhost:8080/registro">
     Registre-se
 </a>
 
