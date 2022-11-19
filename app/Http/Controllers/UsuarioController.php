@@ -14,19 +14,17 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+     public function index()
     {
-        $search = request('search');
-            if($search){
-                $materia = Materia::where([
-                    ['materias', 'like', '%'.$search.'%']
-                ])->get();
-                
-        }   else {
-                $materia = Materia::all();
-        }
-        $aux = '';
-        return view('welcome',['search'=>$search, 'aux'=>$aux,'materias'=>$materia]);
+        return view('auth/register');
+        //
+    }
+
+    public function welcome()
+    {
+
+        return view('welcome');
         //
     }
 
@@ -134,5 +132,13 @@ class UsuarioController extends Controller
     public function destroy(Aluno $aluno)
     {
         //
+    }
+
+    public function verifica(Request $dados)
+    {
+        $nome="vazio";
+        $prof = $dados->profissao;
+        return view('auth/register',['prof'=>$prof,'name'=>$nome]);
+        
     }
 }
