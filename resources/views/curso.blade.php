@@ -93,7 +93,7 @@
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}{{'vazio'}}/{{0}}">Inscrever-se</a>
+          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}/{{'vazio'}}/{{0}}">Inscrever-se</a>
         </li>
         @endif  
     @elseif($user->identificador==1)
@@ -103,7 +103,7 @@
         </li>
         @elseif($matriculado==0)
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}">Lecionar</a>
+          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}/{{'vazio'}}/{{0}}">Lecionar</a>
         </li>
         @else
         <li class="nav-item">
@@ -177,11 +177,14 @@
     <img class="me-3" src= {{ asset($img) }} alt="" width="48" height="38">
     <div class="lh-1">
       <h1 class="h6 mb-0 text-white lh-1">Professor</h1>
-      @if($curso->docentes!=NULL)
+    @if($curso->docentes!=NULL)
       <small>{{$curso->docentes}}</small>
+      @if($user->identificador==2)
       <small><a class="nav-link" href="/remove/aluno/{{$curso->id}}/{{$curso->docentes}}/{{1}}">Remover</a></small>
-      @else
+      @endif
+    @else
       <small>Sem atribuição de professor até o momento!</small>
+      @if($user->identificador==2)
       <small><a  class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Adicionar professor</a>
           <ul class="dropdown-menu">
             @foreach($profLivres as $aux)
@@ -189,6 +192,7 @@
             @endforeach
           </ul></small>
       @endif
+    @endif
     </div>
   </div>
 
@@ -276,10 +280,11 @@
     </tbody>
     </div> 
     </form> 
-@else
+@elseif($user->identificador==2)
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <h6 class="border-bottom pb-2 mb-0">Notas</h6>
   <div class="table-responsive">
+    
       <table class="table table-striped table-sm">
         <thead>
           <tr>
@@ -307,9 +312,8 @@
             <li><a class="dropdown-item" href="/add/aluno/{{$curso->id}}/{{$aux}}/{{1}}">{{$aux}}</a></li>
             @endforeach
           </ul></td>
-
-    </tbody> 
-    </div> 
+      </tbody> 
+      </div> 
 
 @endif
   

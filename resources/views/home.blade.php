@@ -95,7 +95,7 @@
           <ul class="list-unstyled">
             @if($user->identificador==1)
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
-            <li><a href="#" class="text-white">Ver cursos</a></li>
+            <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->matriculas}}" class="text-white">Ver cursos</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -107,7 +107,7 @@
             @endif
             @if($user->identificador==0)
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
-            <li><a href="#" class="text-white">Ver cursos</a></li>
+            <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->medias}}" class="text-white">Ver cursos</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -119,8 +119,8 @@
             @endif
             @if($user->identificador==2)
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
-            <li><a href="#" class="text-white">Ver alunos e professores</a></li>
-            <li><a href="#" class="text-white">Criar curso</a></li>
+            <li><a href="/users" class="text-white">Ver alunos e professores</a></li>
+            <li><a href="/register/curso" class="text-white">Criar curso</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -196,6 +196,8 @@
                   <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                   </form>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
+                  @else
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
                   @endif
               @endif

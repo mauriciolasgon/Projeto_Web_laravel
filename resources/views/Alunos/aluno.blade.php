@@ -76,17 +76,34 @@
     <link href={{ asset( "css/list-groups.css" ) }} rel="stylesheet">
   </head>
   <body>
-@for($i=0; $i< count($alunos);$i++)
-  <div class="list-group list-group-checkable d-grid gap-2 border-0 w-auto">
-  <input class="list-group-item-check pe-none" type="radio" name="listGroupCheckableRadios" id="listGroupCheckableRadios1" value="" checked>
-  <label class="list-group-item rounded-3 py-3" for="listGroupCheckableRadios1">
-    {{$alunos[$i]}}
-    <span class="d-block small opacity-50">Filmes favoritos: {{$filmes[$i]}}</span>
-  </label>
-</div>
-@endfor
-<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+  <strong><a href="/home">Voltar</a></strong>
+  <div class="d-flex gap-5 justify-content-center">
+  <div class="list-group mx-0 w-auto">
+  <strong>Alunos</strong>
+  @foreach($alunos as $aluno)
+    <label class="list-group-item d-flex gap-2">
+      <span>
+        {{$aluno->name}}
+        <small class="d-block text-muted">With support text underneath to add more detail</small>
+      </span>
+    </label>
+  @endforeach
+  <a href="/cria/user/{{1}}">Adicionar aluno</a>
+    </div>
 
+  <div class="list-group mx-0 w-auto">
+  <strong>Professores</strong>
+  @foreach($profs as $prof)
+    <label class="list-group-item d-flex gap-2">
+      <span>
+        {{$prof->name}}
+        <small class="d-block text-muted">With support text underneath to add more detail</small>
+      </span>
+    </label>
+  @endforeach
+  <a href="/cria/user/{{2}}" >Adicionar professor</a>
+  </div>
+</div>
       
 </body>
 </html>

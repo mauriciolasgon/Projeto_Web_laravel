@@ -101,9 +101,17 @@ class CursoController extends Controller
         }
         $alunos=explode(';',$curso->alunos);
         $alunosAux=implode(';',$alunos);
-
+        $aux=0;
         // pega a media dos alunos
-        $medias=[0];
+        if($alunos[0]=="")
+        {
+            $medias=[0];
+        }
+        else
+        {
+            $medias=[];
+        }
+        
         for($i=0;$i<count($alunos);$i++)
         {
             $salto=0;
@@ -145,6 +153,8 @@ class CursoController extends Controller
 
         // mostra se a matricula do curso esta em aberto ou fechada
         $indicador=$curso->aberto_fechado;
+
+
        return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux,'medias'=>$medias,'alunoNaoCadastro'=>$alunosNaoCadastrados,'indicador'=>$indicador,'profLivres'=>$professoresNaoCadastrados,'mediaTotal'=>$mediatotal]);
     }
     
@@ -233,34 +243,6 @@ class CursoController extends Controller
         return redirect()->back();
     }
 
-    //Vai para a pagina de integrantes do curso
-    public function showIntegrantesView($cursoid)
-    {
-        $filmes=[];
-        $cursos=Curso::all();
-        for($i=0;$i<count($cursos);$i++)
-        {
-            if($cursos[$i]->id == $cursoid)
-            {  
-                $curso=$cursos[$i];
-            }
-        }
-        // Pega os filmes de cada aluno
-        $users=User::all();
-        $alunos=$curso->alunos;
-        $alunos=explode(';',$alunos);
-        foreach($alunos as $aluno)
-        {
-            foreach($users as $user)
-            {
-                if($aluno==$user->name)
-                {
-                    array_push($filmes,$user->filmes);
-                }
-            }
-        } 
-        return view('Alunos.aluno',['alunos'=>$alunos,'filmes'=>$filmes]);
-    }
 
     public function removeAlunos($cursoId,$nameAluno,$aux)
     {
@@ -425,5 +407,7 @@ class CursoController extends Controller
         Curso::find($cursoid)->update(['aberto_fechado' => $indicador]); 
         return redirect()->back();
     }
+
+    
 
 }

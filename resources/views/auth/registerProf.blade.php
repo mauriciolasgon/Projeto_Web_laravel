@@ -18,8 +18,8 @@ img{
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                
-                <form method="POST" action="{{route('verifica')}}">
+                @if($aux!=2)
+                <form method="POST" action="{{route('verifica',0)}}">
                     @csrf
                         <div class="row mb-3">
                             <label for="profissao" class="col-md-4 col-form-label text-md-end">{{ __('Profissão') }}</label>
@@ -34,8 +34,13 @@ img{
                             </div>
                         </div>
                     </form>  
+                @endif
+                @if($aux==2)
+                <form method="POST" action="{{ route('cria.users') }}">
+                @else
                 <form method="POST" action="{{ route('register') }}">
-                    @csrf
+                @endif
+                @csrf
                 <div class="col-lg-4">
                 <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">   
                  <h2 class="fw-normal">Avatar</h2>
