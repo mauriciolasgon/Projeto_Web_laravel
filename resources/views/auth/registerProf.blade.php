@@ -210,3 +210,4 @@ img{
     </div>
 </div>
 <script src={{ asset('js/avatar.js') }}></script>
+@endsection

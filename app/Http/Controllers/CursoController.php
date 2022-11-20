@@ -12,7 +12,7 @@ class CursoController extends Controller
 
     public function index($id,$aux2)
     {
-
+# aux2 indica a rota que deve ser tomada-No caso de alterar medias- Visao do professor
         $user=Auth::user();
         $name=$user->name;
         $jsonUser=$user;
@@ -34,13 +34,38 @@ class CursoController extends Controller
         //atualiza a pagina com informações do banco de dados
     
         $usuarios=User::all(); 
-
-        //cria vetor das matriculas do aluno
+        //cria vetor das matriculas do aluno e pega alunos nao cadastrados no curso
+        $alunosNaoCadastrados=[];
+        $professoresNaoCadastrados=[];
         foreach($usuarios as $usuario)
         {   
             if($usuario->id == $user->id)
             {
                 $matriculas=$usuario->matriculas;
+
+            }
+            //pega alunos ou professores nao cadastrados no curso
+            else
+            {   
+                $indice=0;
+                $matriculasProvisorias=$usuario->matriculas;
+                $matriculasProvisorias=explode(';',$matriculasProvisorias);
+                foreach($matriculasProvisorias as $prov)
+                {
+                    if($prov==$curso->id)
+                    {
+                        // determina se o usuario esta matriculado no curso
+                        $indice=1;
+                    }
+                }
+                if($indice!=1 and $usuario->identificador==0)
+                {
+                    array_push($alunosNaoCadastrados,$usuario->name);
+                }
+                elseif($indice!=1 and $usuario->identificador==1)
+                {   
+                    array_push($professoresNaoCadastrados,$usuario->name);
+                }
 
             }
         }
@@ -74,17 +99,75 @@ class CursoController extends Controller
                 
             }
         }
-        // pega os alunos do curso
         $alunos=explode(';',$curso->alunos);
         $alunosAux=implode(';',$alunos);
 
-       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux]);
-    }
-    //
-    public function AddAlunos($cursoid)
-    {
+        // pega a media dos alunos
+        $medias=[0];
+        for($i=0;$i<count($alunos);$i++)
+        {
+            $salto=0;
+            foreach($usuarios as $usuario)
+            {
+                if($alunos[$i]==$usuario->name)
+                {
+                    $mediass=$usuario->medias;
+                    $mediass=explode(":",$mediass);
+                    if(count($mediass)==2)
+                    {
+                        $numeroSaltos=1;
+                    }
+                    else
+                    {
+                        $numeroSaltos=(count($mediass)/2);
+                    }
+                    // percorre o vetor somento nos indices pares (onde esta o id do curso)
+                    for($j=0;$j<$numeroSaltos;$j++)
+                    {
+                        if($mediass[$salto]==$id)
+                        {
+                            array_push($medias,$mediass[$salto+1]);
+                            
+                        }
+                        // pula para o próximo indice par
+                        $salto+=2;
+                    }   
+                }
+            }    
+        }
+        // calcula a media das medias
+        $mediatotal=0;
+        foreach($medias as $media)
+        {
+            $mediatotal=$media+$mediatotal;
+        }
+        $mediatotal=$mediatotal/count($alunos);
 
-        $user=Auth::user();
+        // mostra se a matricula do curso esta em aberto ou fechada
+        $indicador=$curso->aberto_fechado;
+       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux,'medias'=>$medias,'alunoNaoCadastro'=>$alunosNaoCadastrados,'indicador'=>$indicador,'profLivres'=>$professoresNaoCadastrados,'mediaTotal'=>$mediatotal]);
+    }
+    
+    //
+    public function AddAlunos($cursoid,$nameAluno,$aux)
+    {
+# aux define se a secretaria esta adicionando aluno ou se a secretaria esta adicionando
+# alunos no curso- se aux=1 requisição secretaria
+        if($aux==0)
+        {
+            $user=Auth::user();
+        }
+        else
+        {
+            $users=User::all();
+            foreach($users as $us)
+            {
+                if($us->name==$nameAluno)
+                {
+                    $user=$us;
+                }
+            }
+        }
         //matricula alunos e atribui professores aos cursos
         $alunos=[];
         $nome=$user->name;
@@ -119,9 +202,21 @@ class CursoController extends Controller
             $alunos=implode(";", $alunos);
             $matriculas=implode(";", $matriculas);
             
+            $verNULL=$user->medias;
+            $medias=[];
+            if($verNULL!=NULL)
+            {   
+                $medias=$user->medias;
+                $medias=explode(':',$medias);
+            }
+
+            array_push($medias,$cursoid);
+            array_push($medias,0);
+            $medias=implode(':',$medias);
+
+            
             Curso::find($cursoid)->update(['alunos' => $alunos]);
-            User::find($user->id)->update(['matriculas' => $matriculas]);
-            User::find($user->id)->update(['medias' => "$cursoid:"]);
+            User::find($user->id)->update(['matriculas' => $matriculas,'medias' => $medias]);
         }
         else
         {
@@ -132,7 +227,6 @@ class CursoController extends Controller
         
         return redirect()->back();
        
-        #terminar essa função
     }
     public function back()
     {
@@ -168,9 +262,26 @@ class CursoController extends Controller
         return view('Alunos.aluno',['alunos'=>$alunos,'filmes'=>$filmes]);
     }
 
-    public function removeAlunos($cursoId)
+    public function removeAlunos($cursoId,$nameAluno,$aux)
     {
-        $user=Auth::user();
+# aux define se a secretaria esta adicionando aluno ou se a secretaria esta adicionando
+# alunos no curso  - se aux=1 requisição secretaria
+        
+        if($aux==0)
+        {
+            $user=Auth::user();
+        }
+        else
+        {
+            $users=User::all();
+            foreach($users as $us)
+            {
+                if($us->name==$nameAluno)
+                {
+                    $user=$us;
+                }
+            }
+        }
         //Remove a matricula do aluno e do professor
         $cursos=Curso::all();
         $cursos=json_decode($cursos);
@@ -198,9 +309,9 @@ class CursoController extends Controller
         }
         else
         {
-            Curso::find($curso->id)->update(['docentes'=>"vazio"]);
+            Curso::find($curso->id)->update(['docentes'=>NULL]);
         }
-        //remove o registro de matricula do usuario
+        //remove o registro de matricula do usuario e sua media
         $matriculas=$user->matriculas;
         $matriculas=explode(';',$matriculas);
         for($i=0;$i<count($matriculas);$i++)
@@ -211,9 +322,33 @@ class CursoController extends Controller
             }
         }
         $matriculas=implode(";", $matriculas);
+        
         if($user->identificador==0)
         {
-            User::find($user->id)->update(['matriculas' => $matriculas]);
+            $salto=0;
+            $medias=$user->medias;
+            $medias=explode(':',$medias);
+            if(count($medias)==2)
+            {
+                $numeroSaltos=1;
+            }
+            else
+            {
+                $numeroSaltos=(count($medias)/2);
+            }
+            for($i=0;$i<$numeroSaltos;$i++)
+            {
+                if($medias[$salto]==$cursoId)
+                {
+                    unset($medias[$salto]);
+                    unset($medias[$salto+1]);  
+                }
+                $salto+=2;
+            } 
+        
+            $medias=implode(':',$medias);
+            User::find($user->id)->update(['matriculas' => $matriculas,'medias' => $medias]);
+
         }
         else
         {
@@ -223,50 +358,72 @@ class CursoController extends Controller
         return redirect()->back();
     }
 
+    
     public function alteraMedias(Request $newMedias,$alunos,$cursoid)
     {       
+            $novaMedias=[];
             $novaMedia=[];
+            //auxiliar que percorre o array dos inputs
+             $j=1;
+            // Pega os dados do input e os coloca em um array 
             foreach($newMedias as $newMedia)
             {
-                array_push($novaMedia,$newMedia);
+                array_push($novaMedias,$newMedia);
             }
-            dd($novaMedia);
+            $novaMedias=$novaMedias[1];
+            foreach($novaMedias as $nova)
+            {
+                array_push($novaMedia,$nova);
+                
+            }
+            //retira o token do array
+            unset($novaMedia[0]);
+            //atualiza o banco de dados
             $users=User::all();
             $medias=[];
-            
-            $alunos=explode(';',$alunos); 
-            foreach($users as $user)
+            $alunos=explode(';',$alunos);
+            foreach($alunos as $aluno)
             {
-                foreach($alunos as $aluno)
+                foreach($users as $user)
                 {
+                    // faz um array das medias, as quais estao organizadas em grupos de 2, sendo o primeiro numero, o id do curso e o 
+                    // segundo a media naquele curso
+
                     if($aluno==$user->name)
                     {
-                        $medias=$user->medias;
-                        $medias=explode(";",$medias);
-                        $medias=implode(":",$medias);
-                        $medias=explode(":",$medias);
-                        for($i=0;$i<((count($medias)/2)-1);$i+=2)
+                        $salto=0;
+                        $mediass=$user->medias;
+                        $mediass=explode(":",$mediass);
+    
+                        if(count($mediass)==2)
                         {
-                            if($medias[$i]==$cursoid)
-                            {
-                                $media[$i+1];
-                            }
+                            $numeroSaltos=1;
                         }
-                        dd($medias);
-                        
+                        else
+                        {
+                            $numeroSaltos=(count($mediass)/2);
+                        }
+                        for($i=0;$i<$numeroSaltos;$i++)
+                        {
+                            if($mediass[$salto]==$cursoid)
+                            {
+                                $mediass[$salto+1]=$novaMedia[$j];
+                                $medias=implode(":",$mediass);
+                                User::find($user->id)->update(['medias' => $medias]);                        
+                                $j++;
+                            }
+                            $salto+=2;
+                        }   
                     }
-                    
                 }
             }
             
-        dd($medias);
-            for($i=0;$i<count($alunos);$i++)
-            {
-                $medias=explode(";",$medias[$i]);
-
-            }
-            
-
+            return redirect("/curso/{$cursoid}/0");      
+    }
+    public function encerraMateria($cursoid,$indicador)
+    {
+        Curso::find($cursoid)->update(['aberto_fechado' => $indicador]); 
+        return redirect()->back();
     }
 
 }

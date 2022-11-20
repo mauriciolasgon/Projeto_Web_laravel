@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('descriçao_simplificada');
             $table->string('descrição_completa');
             $table->string('alunos')->nullable()->index(); 
-            $table->string('docentes')->index();
+            $table->string('docentes')->nullable()->index();
+            $table->string('aberto_fechado');
         });
     }
 

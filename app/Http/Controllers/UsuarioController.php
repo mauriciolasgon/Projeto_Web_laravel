@@ -124,7 +124,7 @@ class UsuarioController extends Controller
 
     public function verifica(Request $dados)
     {
-        
+
         $prof = $dados->profissao;
         if($prof=='Professor')
         {

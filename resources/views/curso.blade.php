@@ -86,18 +86,18 @@
 
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      @if($user->identificador==0)
-      @if($matriculado==1)
+    @if($user->identificador==0)
+        @if($matriculado==1)
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Inscrito</a>
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}">Inscrever-se</a>
+          <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}{{'vazio'}}/{{0}}">Inscrever-se</a>
         </li>
         @endif  
-      @else
-      @if($matriculado==1)
+    @elseif($user->identificador==1)
+        @if($matriculado==1)
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Lecionando</a>
         </li>
@@ -110,7 +110,17 @@
           <a class="nav-link active" aria-current="page" href="#">Não é possível lecionar</a>
         </li>
         @endif
+    @else
+        @if($indicador==1)
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Matrículas encerradas</a>
+        </li>
+        @else
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/encerra/matricula/{{$curso->id}}/{{1}}">Encerrar matrículas</a>
+        </li>
         @endif
+    @endif
       <li class="nav-item">
           <a class="nav-link" href="#">Dashboard</a>
         </li>
@@ -131,7 +141,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/remove/aluno/{{$curso->id}}">Desmatricular-se</a></li>
+            <li><a class="dropdown-item" href="/remove/aluno/{{$curso->id}}/{{'vazio'}}/{{0}}">Desmatricular-se</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
@@ -167,10 +177,17 @@
     <img class="me-3" src= {{ asset($img) }} alt="" width="48" height="38">
     <div class="lh-1">
       <h1 class="h6 mb-0 text-white lh-1">Professor</h1>
-      @if($curso->docentes!="vazio")
+      @if($curso->docentes!=NULL)
       <small>{{$curso->docentes}}</small>
+      <small><a class="nav-link" href="/remove/aluno/{{$curso->id}}/{{$curso->docentes}}/{{1}}">Remover</a></small>
       @else
       <small>Sem atribuição de professor até o momento!</small>
+      <small><a  class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Adicionar professor</a>
+          <ul class="dropdown-menu">
+            @foreach($profLivres as $aux)
+            <li><a class="dropdown-item" href="/add/aluno/{{$curso->id}}/{{$aux}}/{{1}}">{{$aux}}</a></li>
+            @endforeach
+          </ul></small>
       @endif
     </div>
   </div>
@@ -186,7 +203,7 @@
     <div class="d-flex text-muted pt-3">
 
   </div>
-@if($user->identificador==0)
+@if($user->identificador==0 and $matriculado==1)
   <div class="my-3 p-3 bg-body rounded shadow-sm">
     <h6 class="border-bottom pb-2 mb-0">Notas</h6>
     <div class="d-flex text-muted pt-3">
@@ -222,7 +239,7 @@
       </div>
     </div>
   </div>
-  @elseif($user->identificador==1)
+@elseif($user->identificador==1 and $matriculado==1)
   @if($aux==0)
   <form method="GET" action="/medias/{{$curso->id}}/{{1}}">
   @else
@@ -249,7 +266,7 @@
           <tr>
             <td>{{$alunos[$i]}}</td>
             @if($aux==0)
-            <td>0</td>
+            <td>{{$medias[$i]}}</td>
             @else
             <td><input id="name" type="number"  name="{{$i}}" value="{{ old('$i') }}"></td>
             @endif
@@ -258,14 +275,50 @@
       @endfor
     </tbody>
     </div> 
-    </form>     
-  @endif
+    </form> 
+@else
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <h6 class="border-bottom pb-2 mb-0">Notas</h6>
+  <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Aluno</th>
+            <th scope="col">Média</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+    <tbody>
+      @for($i=0;$i< count($alunos);$i++)
+          <tr>
+            <td>{{$alunos[$i]}}</td>
+            <td>{{$medias[$i]}}</td>
+            @if($medias[$i]>=5)
+            <td>Aprovado</td>
+            @else
+            <td>Reprovado</td> 
+            @endif
+            <td><a class="nav-link" href="/remove/aluno/{{$curso->id}}/{{$alunos[$i]}}/{{1}}">Remover</a></td> 
+            </tr>
+      @endfor
+      <td><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Adicionar alunos</a>
+          <ul class="dropdown-menu">
+            @foreach($alunoNaoCadastro as $aux)
+            <li><a class="dropdown-item" href="/add/aluno/{{$curso->id}}/{{$aux}}/{{1}}">{{$aux}}</a></li>
+            @endforeach
+          </ul></td>
 
+    </tbody> 
+    </div> 
+
+@endif
+  
 </main>
 
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
-      <script src="js/offcanvas.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script type="text/javascript" src={{ asset("js/dashboard.js") }}></script>
+      
   </body>
 </html>
