@@ -122,18 +122,32 @@ class UsuarioController extends Controller
         //
     }
 
-    public function verifica(Request $dados)
+    public function verifica(Request $dados,$aux)
     {
-        
-        $prof = $dados->profissao;
-        if($prof=='Professor')
+# aux indica se a secretaria esta cadastrando usuarios
+# se aux=1, cria aluno/ se aux=2,cria professor    
+        if($aux==1)
         {
-            $avatares=Avatar::all();
-            return view('auth/registerProf',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares]);
+            $prof='Aluno';
+        }
+        elseif($aux==2)
+        {
+            $prof='Professor';
         }
         else
         {
-            return view('auth/register',['prof'=>$prof,'name'=>'vazio']);
+            $prof=$dados->profissao;
+        }
+
+        if($prof=='Professor')
+        {
+            $avatares=Avatar::all();
+            return view('auth/registerProf',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares,'aux'=>$aux]);
+
+        }
+        else
+        {
+            return view('auth/register',['prof'=>$prof,'name'=>'vazio','aux'=>$aux]);
         }
         
     }

@@ -9,22 +9,29 @@
 
                 <div class="card-body">
                 
-                <form method="POST" action="{{route('verifica')}}">
+                @if($aux!=2)
+                <form method="POST" action="{{route('verifica',0)}}">
                     @csrf
                         <div class="row mb-3">
                             <label for="profissao" class="col-md-4 col-form-label text-md-end">{{ __('Profissão') }}</label>
 
                             <div class="col-md-6">
                             <select id="profissoes" name="profissao">
+                            <option value="Professor">Professor</option>
                                 <option value="Aluno">Aluno</option>
-			                    <option value="Professor">Professor</option>
+			                    
                             </select>
                             <button type="submit" class="btn btn-primary" >Selecionar</button>
                             </div>
                         </div>
-                    </form>    
-                    <form method="POST" action="{{ route('register') }}">
-                    @csrf
+                    </form>  
+                @endif
+                @if($aux==1)
+                <form method="POST" action="{{ route('cria.users') }}">
+                @else
+                <form method="POST" action="{{ route('register') }}">
+                @endif
+                @csrf
                     
                     <div class="row mb-3">
                      <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Ocupação') }}</label>

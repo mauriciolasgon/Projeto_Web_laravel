@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +13,9 @@
     
 
     
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -81,21 +80,55 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">About</h4>
-          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+          @if($user->identificador==0)
+          <h4 class="text-white">Filmes favoritos</h4>
+          <p class="text-muted">{{$user->filmes}}</p>
+          @elseif($user->identificador==1)
+          <h4 class="text-white">{{$user->name}}</h4>
+          <img  src= {{ asset( $user->avatar ) }} alt="avatar">
+          @else
+          <h4 class="text-white">{{$user->name}}</h4>
+          @endif
         </div>
         <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
+          <h4 class="text-white">Perfil</h4>
           <ul class="list-unstyled">
             @if($user->identificador==1)
-            <li><a href="#" class="text-white">Perfil Prof</a></li>
-            <li><a href="#" class="text-white">Ver cursos</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->matriculas}}" class="text-white">Ver cursos</a></li>
+            <li><a href="{{ route('logout') }}" class="text-white" 
+                  onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+            </li>
             @endif
             @if($user->identificador==0)
-            <li><a href="#" class="text-white">Perfil</a></li>
-            <li><a href="#" class="text-white">Ver cursos</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->medias}}" class="text-white">Ver cursos</a></li>
+            <li><a href="{{ route('logout') }}" class="text-white" 
+                  onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+            </li>
+            @endif
+            @if($user->identificador==2)
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            <li><a href="/users" class="text-white">Ver alunos e professores</a></li>
+            <li><a href="/register/curso" class="text-white">Criar curso</a></li>
+            <li><a href="{{ route('logout') }}" class="text-white" 
+                  onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+            </li>
             @endif
             
           </ul>
@@ -143,20 +176,31 @@
               <p class="card-text">{{$cursos[$i]->descriçao_simplificada}}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
+              @if($cursos[$i]->aberto_fechado==0)   
                 @if($NumParticipantes[$i]<'4')
-                <form method="GET" action="/curso/{{$cursos[$i]->id}}">
+                <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Numero de inscritos insuficiente</button>
                   @elseif($NumParticipantes[$i]>'10')
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Fechado</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
                   @else
-                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{$jsonUser}}/{{$name}}">
+                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
-                </form>
+                  </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Aberto</button>
                   @endif
+              @else
+                  @if($user->identificador==2)
+                  <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                  </form>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
+                  @else
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
+                  @endif
+              @endif
                 </div>
                 <small class="text-muted">Quantidade de inscritos:{{$NumParticipantes[$i]}}</small>
               </div>
@@ -186,5 +230,3 @@
       
   </body>
 </html>
-
-@endsection
