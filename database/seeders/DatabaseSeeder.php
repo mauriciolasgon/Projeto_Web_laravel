@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            materias::class,
+            avatarSeeder::class,
             usuarios::class,
         ]);
         // \App\Models\User::factory(10)->create();
