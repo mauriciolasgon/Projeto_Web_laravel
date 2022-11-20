@@ -129,11 +129,11 @@ class UsuarioController extends Controller
         if($prof=='Professor')
         {
             $avatares=Avatar::all();
-            return view('auth/register01',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares]);
+            return view('auth/register_P',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares]);
         }
         else
         {
-            return view('auth/register01',['prof'=>$prof,'name'=>'vazio']);
+            return view('auth/register_P',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares]);
         }
         
     }

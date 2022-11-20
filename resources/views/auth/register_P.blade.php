@@ -30,8 +30,23 @@
        <label for="inputZip" class="form-label">CPF</label>
        <input type="text" class="form-control" id="inputZip" placeholder="000.000.000-00">
      </div>
-     <div class="col-12">
-       
+     <div class="col-lg-4">
+     <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">
+      <h2 class="fw-normal">Avatar</h2>
+         <p></p>
+         <li class="nav-item dropdown">
+             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                         Selecione um Avatar
+             </a>
+             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+             @foreach($avatares as $avatar)
+             <div class="col-lg-4">
+             <img  src= {{ asset( $avatar->path) }} alt="avatar">
+             <input id="avatar" type="checkbox"  name="avatar" value={{ $avatar->path }} >
+             </div>
+             @endforeach
+             </div>
+  
          </label>
        </div>
      </div>
@@ -57,7 +72,7 @@
     </div>
     <div class="col-md-2">
     <label for="inputZip" class="form-label">CEP</label>
-    <input type="text" class="form-control" id="inputZip" placeholder="00000-000">
+    <input type="number" class="form-control" id="inputZip" placeholder="00000-000">
   </div>
   <div class="col-12">
     
