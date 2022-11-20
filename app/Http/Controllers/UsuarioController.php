@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Materia;
+use App\Models\Avatar;
 
 
 class UsuarioController extends Controller
@@ -14,16 +15,14 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-     public function index()
+    public function index()
     {
-        return view('auth/register');
+        return view('/auth/register');
         //
     }
 
     public function welcome()
     {
-
         return view('welcome');
         //
     }
@@ -44,18 +43,7 @@ class UsuarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $usuario= new User;
-
-        $usuario->nome= $request->nome;
-        $usuario->filmes= $request->filmes;
-        
-        $event->save();
-
-        return redirect('/');
-        //
-    }
+    
 
     /**
      * Display the specified resource.
@@ -134,11 +122,37 @@ class UsuarioController extends Controller
         //
     }
 
-    public function verifica(Request $dados)
+    public function verifica(Request $dados,$aux)
     {
-        $nome="vazio";
-        $prof = $dados->profissao;
-        return view('auth/register',['prof'=>$prof,'name'=>$nome]);
+# aux indica se a secretaria esta cadastrando usuarios
+# se aux=1, cria aluno/ se aux=2,cria professor    
+        if($aux==1)
+        {
+            $prof='Aluno';
+        }
+        elseif($aux==2)
+        {
+            $prof='Professor';
+        }
+        else
+        {
+            $prof=$dados->profissao;
+        }
+
+        if($prof=='Professor')
+        {
+            $avatares=Avatar::all();
+            return view('auth/registerProf',['prof'=>$prof,'name'=>'vazio','avatares'=>$avatares,'aux'=>$aux]);
+
+        }
+        else
+        {
+            return view('auth/register',['prof'=>$prof,'name'=>'vazio','aux'=>$aux]);
+        }
         
     }
+
+   
+
+    
 }

@@ -7,9 +7,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfessorController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\CursoController;
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,25 +23,39 @@ Route::get('/a',[UsuarioController::class,'index'])->name('welcome');
 Route::get('/Materias/{materia}', [UsuarioController::class, 'show'])->name('materia');
 Route::get('/Alunos/{aluno}', [UsuarioController::class, 'show_aluno'])->name('aluno');
 
-Route::get('/registro',[UsuarioController::class,'verifica'])->name('registro');
-Route::post('/verifica',[UsuarioController::class,'verifica'])->name('verifica');
+// Rotas de registro
+Route::get('/registro/{aux}',[UsuarioController::class,'verifica'])->name('registro');
+Route::post('/verifica/{aux}',[UsuarioController::class,'verifica'])->name('verifica');
+Route::get('/cria/user/{aux}',[UsuarioController::class,'verifica']);
+Route::post('/cria/users',[HomeController::class,'criaUser'])->name('cria.users');
 
+// Rotas da pagina do curso
+Route::get('/curso/{id}/{aux}',[CursoController::class,'index'])->name('curso');
+Route::get('/medias/{id}/{aux}',[CursoController::class,'index']);
+Route::post('/atribui/medias/{alunos}/{cursoid}',[CursoController::class,'alteraMedias'])->name('atribui.medias');
 
-# Autenticação da tabela professors
-Route::get('/professores/login', [ProfessorController::class, 'login'])->name('professores.login');
-Route::post('/professores/logar', [ProfessorController::class, 'logar'])->name('professores.logar');
-Route::post('/professores/logout', [ProfessorController::class, 'logout'])->name('professores.logout');
-Route::get('/professores/dashboard/{user}', [ProfessorController::class, 'dashboard'])->name('professores.dashboard')->middleware('auth.professores');
+//view cursos do usuario
+Route::get('/view/cursos/{matriculas}/{medias}',[HomeController::class,'showUserCursos']);
 
-# Cadastro na tabela professors
-Route::post('/prof/register', [App\Http\Controllers\Auth\RegisterController::class,'profregister'])->name('prof.register');
+// View todos users
+Route::get('/users',[HomeController::class,'showIntegrantesView']);
 
-# Rota para a página do curso
-Route::get('/curso/{curso}/{identificador}/{name}',[CursoController::class,'index'])->name('curso');
+//encerra matricula
+Route::get('/encerra/matricula/{cursoid}/{indicador}',[CursoController::class,'encerraMateria']);
 
 # Inscrever alunos no curso
-Route::get('/add/aluno/{nome}/{curso}',[CursoController::class,'AddAlunos'])->name('add.aluno');
+Route::get('/add/aluno/{cursoid}/{user}/{aux}',[CursoController::class,'AddAlunos'])->name('add.aluno');
+
+# Redefinir senha
+Route::get('/redefinir/blade',[App\Http\Controllers\HomeController::class,'redefinirBlade']);
+Route::post('/show/redefinir',[App\Http\Controllers\HomeController::class,'redefinirBlade'])->name('show.reset');
+Route::post('/redefinir/senha',[App\Http\Controllers\HomeController::class,'redefinirSenha'])->name('redefinir.senha');
+
+# Remover alunos do curso
+Route::get('/remove/aluno/{cursoId}/{user}/{aux}',[CursoController::class,'removeAlunos'])->name('remove.aluno');
+
+# Register curso
+Route::get('/register/curso',[HomeController::class,'showRegisterCursoView']);
+
 Auth::routes();
-Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
