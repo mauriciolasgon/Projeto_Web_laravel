@@ -22,10 +22,12 @@
                         </a>
                             
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        @foreach($imagens as $imagem)
                         <div class="col-lg-4">
-                        <img   alt="avatar">   
-                        <input id="avatar" type="checkbox"  name="avatar" value= >
+                        <img  src= {{ asset( $imagem->cursoImagem) }} alt="imagem">   
+                        <input id="imagem" type="checkbox"  name="imagem" value={{ $imagem->cursoImagem }} >
                         </div>
+                        @endforeach
                         </div>
                     </li>
                     </div>

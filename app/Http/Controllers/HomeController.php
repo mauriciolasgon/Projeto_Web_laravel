@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Imagen;
 
 class HomeController extends Controller
 {
@@ -87,6 +88,7 @@ class HomeController extends Controller
     // Secretaria cria usuario
     public function criaUser(Request $data)
     {
+        $aux=0;
         if($data['profissao']=='Aluno') {
              User::create([
                 'name' => $data['name'],
@@ -105,7 +107,7 @@ class HomeController extends Controller
                 'password' => Hash::make($data['password']),
             ]);
         }
-        elseif($data['profissao']=='Professor')  
+        elseif($data['profissao']=='Professor')  {
                  User::create([
                 'name' => $data['name'],
                 'CPF' => $data['CPF'],
@@ -122,17 +124,21 @@ class HomeController extends Controller
                 'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
+        }
         else
+        {   
                 // aux determina para onde devo ser direcionado
                 $aux=1;
                 Curso::create([
                 'curso' => $data['name'],
                 'descriçao_simplificada' => $data['ds'],
                 'descrição_completa' => $data['dc'],
+                'path'=>$data['imagem'],
                 'alunos' =>NULL,
                 'docentes' =>NULL,
                 'aberto_fechado'=>0,
         ]);
+        }
         if($aux==1)
         {
             return redirect('/home');  
@@ -191,8 +197,10 @@ class HomeController extends Controller
         }
         return view('Alunos.aluno',['alunos'=>$alunos,'profs'=>$profs]);
     }
+    
     public function showRegisterCursoView()
     {
-        return view('auth/registerCurso');
+        $imagens=Imagen::all();
+        return view('auth/registerCurso',['imagens'=>$imagens]);
     }
 }

@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                 
-                @if($aux!=2)
+                @if($aux!=1)
                 <form method="POST" action="{{route('verifica',0)}}">
                     @csrf
                         <div class="row mb-3">
