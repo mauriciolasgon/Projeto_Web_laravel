@@ -143,19 +143,32 @@ class CursoController extends Controller
                 }
             }    
         }
-        // calcula a media das medias
+        // calcula a media das medias e a procentagem de arpovados e repovados
         $mediatotal=0;
+        $aprovados=0;
+        $reprovados=0;
+        // aprovados estao no indice 0 e reprovados no indice 1
+        $situação=[];
         foreach($medias as $media)
         {
+            if($media>5)
+            {
+                $aprovados++;
+            }
+            else
+            {
+                $reprovados++;
+            }
             $mediatotal=$media+$mediatotal;
         }
-        $mediatotal=$mediatotal/count($alunos);
 
+        array_push($situação,($aprovados/count($alunos))*100,($reprovados/count($alunos))*100);
+        $mediatotal=$mediatotal/count($alunos);
         // mostra se a matricula do curso esta em aberto ou fechada
         $indicador=$curso->aberto_fechado;
 
 
-       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux,'medias'=>$medias,'alunoNaoCadastro'=>$alunosNaoCadastrados,'indicador'=>$indicador,'profLivres'=>$professoresNaoCadastrados,'mediaTotal'=>$mediatotal]);
+       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux,'medias'=>$medias,'alunoNaoCadastro'=>$alunosNaoCadastrados,'indicador'=>$indicador,'profLivres'=>$professoresNaoCadastrados,'mediaTotal'=>$mediatotal,'situação'=>$situação]);
     }
     
     //

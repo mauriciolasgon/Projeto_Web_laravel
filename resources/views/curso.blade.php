@@ -282,6 +282,9 @@
     </form> 
 @elseif($user->identificador==2)
   <div class="my-3 p-3 bg-body rounded shadow-sm">
+  <h6 class="border-bottom pb-2 mb-0">% de aprovados: {{$situação[0]}}%</h6>
+  <h6 class="border-bottom pb-2 mb-0">% de reprovados: {{$situação[1]}}%</h6>
+  <h6 class="border-bottom pb-2 mb-0">Média da sala : {{$mediaTotal}}</h6>
     <h6 class="border-bottom pb-2 mb-0">Notas</h6>
   <div class="table-responsive">
     
@@ -299,14 +302,14 @@
             <td>{{$alunos[$i]}}</td>
             <td>{{$medias[$i]}}</td>
             @if($medias[$i]>=5)
-            <td>Aprovado</td>
+            <td><span class="btn btn-success">Aprovado</span></td>
             @else
-            <td>Reprovado</td> 
+            <td><span class="btn btn-danger">Reprovado</span></td> 
             @endif
-            <td><a class="nav-link" href="/remove/aluno/{{$curso->id}}/{{$alunos[$i]}}/{{1}}">Remover</a></td> 
+            <td><a class="btn btn-primary" href="/remove/aluno/{{$curso->id}}/{{$alunos[$i]}}/{{1}}">Remover</a></td> 
             </tr>
       @endfor
-      <td><a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Adicionar alunos</a>
+      <td><a class="btn btn-primary" href="#" data-bs-toggle="dropdown" aria-expanded="false">Adicionar alunos  ⇣</a>
           <ul class="dropdown-menu">
             @foreach($alunoNaoCadastro as $aux)
             <li><a class="dropdown-item" href="/add/aluno/{{$curso->id}}/{{$aux}}/{{1}}">{{$aux}}</a></li>
