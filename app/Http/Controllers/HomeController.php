@@ -148,7 +148,32 @@ class HomeController extends Controller
 
     public function showUserCursos($userMatriculas,$medias)
     {   
-        $cursos=Curso::all();
+        // verificia se o acesso é do prof ou do aluno
+        if($medias==1)
+        {
+            $cursos=Curso::all();
+
+            // pega os cursos do usuario
+            // e a media do usuario em cada curso
+            $userMatriculas=explode(';',$userMatriculas);
+            $meusCursos=[];
+            foreach($userMatriculas as $matriculas)
+            {
+                foreach($cursos as $curso)
+                {
+                    if($matriculas==$curso->id)
+                    {
+                        array_push($meusCursos,$curso);
+
+                    }
+                }    
+            }
+    
+        return view('userCurso',['medias'=>$medias,'cursos'=>$meusCursos]);
+        }
+        elseif($medias!=1 and $medias!=3)
+        {
+            $cursos=Curso::all();
 
         // pega os cursos do usuario
         // e a media do usuario em cada curso
@@ -172,10 +197,20 @@ class HomeController extends Controller
                     array_push($meusCursos,$curso);
 
                 }
-            }    
+            }
+            
         }
 
         return view('userCurso',['medias'=>$minhasMedias,'cursos'=>$meusCursos]);
+        }
+        else
+        {
+            $cursos=Curso::all();
+                
+    
+            return view('userCurso',['medias'=>$medias,'cursos'=>$cursos]);
+        }   
+
     }
 
         //VÊ todoos os usuarios

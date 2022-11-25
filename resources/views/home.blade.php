@@ -95,7 +95,7 @@
           <ul class="list-unstyled">
             @if($user->identificador==1)
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
-            <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->matriculas}}" class="text-white">Ver cursos</a></li>
+            <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->identificador}}" class="text-white">Ver cursos</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -120,6 +120,20 @@
             @if($user->identificador==2)
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
             <li><a href="/users" class="text-white">Ver alunos e professores</a></li>
+            <li><a href="/register/curso" class="text-white">Criar curso</a></li>
+            <li><a href="{{ route('logout') }}" class="text-white" 
+                  onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                    Logout</a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+            </li>
+            @endif
+            @if($user->identificador==3)
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            <li><a href="/users" class="text-white">Ver alunos e professores</a></li>
+            <li><a href="/view/cursos/{{$user->identificador}}/{{$user->identificador}}" class="text-white">Ver cursos</a></li>
             <li><a href="/register/curso" class="text-white">Criar curso</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
@@ -173,7 +187,7 @@
                 <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Numero de inscritos insuficiente</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Mínimo de alunos não atingido!</button>
                   @elseif($NumParticipantes[$i]>'10')
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
@@ -181,10 +195,10 @@
                   <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                   </form>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Aberto</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Curso acontecerá!</button>
                   @endif
               @else
-                  @if($user->identificador==2)
+                  @if($user->identificador==2 or $user->identificador==3)
                   <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                   </form>

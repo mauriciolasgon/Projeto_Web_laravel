@@ -86,6 +86,7 @@
 
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+   
     @if($user->identificador==0)
         @if($matriculado==1)
         <li class="nav-item">
