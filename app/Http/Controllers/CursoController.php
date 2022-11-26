@@ -39,10 +39,35 @@ class CursoController extends Controller
         $professoresNaoCadastrados=[];
         foreach($usuarios as $usuario)
         {   
+            $salto=0;
             if($usuario->id == $user->id)
             {
                 $matriculas=$usuario->matriculas;
+                $minhaMedia=$user->medias;
+                $minhaMedia=explode(":",$minhaMedia);
+                if(count($minhaMedia)==2)
+                    {
+                        $numeroSaltos=1;
+                    }
+                else
+                {
+                    $numeroSaltos=(count($minhaMedia)/2);
+                }
+                    // percorre o vetor somento nos indices pares (onde esta o id do curso)
+                if($user->identificador==3)
+                {
+                    $minhaMedia="ADM";
+                }
+                for($j=0;$j<$numeroSaltos;$j++)
+                {
+                    if($minhaMedia[$salto]==$id)
+                    {
 
+                        $minhaMedia=$minhaMedia[$salto+1];
+                    }
+                        // pula para o próximo indice par
+                    $salto+=2;
+                }
             }
             //pega alunos ou professores nao cadastrados no curso
             else
@@ -134,6 +159,7 @@ class CursoController extends Controller
                     {
                         if($mediass[$salto]==$id)
                         {
+
                             array_push($medias,$mediass[$salto+1]);
                             
                         }
@@ -143,6 +169,7 @@ class CursoController extends Controller
                 }
             }    
         }
+        
         // calcula a media das medias e a procentagem de arpovados e repovados
         $mediatotal=0;
         $aprovados=0;
@@ -168,7 +195,7 @@ class CursoController extends Controller
         $indicador=$curso->aberto_fechado;
 
 
-       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux,'medias'=>$medias,'alunoNaoCadastro'=>$alunosNaoCadastrados,'indicador'=>$indicador,'profLivres'=>$professoresNaoCadastrados,'mediaTotal'=>$mediatotal,'situação'=>$situação]);
+       return view('curso',['curso'=>$curso,'user'=>$user,'matriculado'=>$matriculado,'jsonUser'=>$jsonUser,'img'=>$img,'alunos'=>$alunos,'aux'=>$aux2,'alunosAux'=>$alunosAux,'medias'=>$medias,'alunoNaoCadastro'=>$alunosNaoCadastrados,'indicador'=>$indicador,'profLivres'=>$professoresNaoCadastrados,'mediaTotal'=>$mediatotal,'situação'=>$situação,'minhaMedia'=>$minhaMedia]);
     }
     
     //

@@ -87,8 +87,8 @@
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
    
-    @if($user->identificador==0)
-        @if($matriculado==1)
+    @if($user->identificador==0 or $user->identificador==3)
+        @if($matriculado==1 or $user->identificador==3)
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Inscrito</a>
         </li>
@@ -96,9 +96,10 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/add/aluno/{{$curso->id}}/{{'vazio'}}/{{0}}">Inscrever-se</a>
         </li>
-        @endif  
-    @elseif($user->identificador==1)
-        @if($matriculado==1)
+        @endif
+    @endif  
+    @if($user->identificador==1 or $user->identificador==3 )
+        @if($matriculado==1 or $user->identificador==3)
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Lecionando</a>
         </li>
@@ -111,7 +112,8 @@
           <a class="nav-link active" aria-current="page" href="#">Não é possível lecionar</a>
         </li>
         @endif
-    @else
+    @endif 
+    @if($user->identificador==2 or $user->identificador==3)
         @if($indicador==1)
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="#">Matrículas encerradas</a>
@@ -129,29 +131,13 @@
         <li class="nav-item">
           <a class="nav-link" href="/integrantes/{{$curso->id}}">Pessoas</a>
         </li>
-
-        @if($user->identificador==0)
-        <li class="nav-item">
-          <a class="nav-link" href="#">Nota</a>
-        </li>
-        @else
-        <li class="nav-item">
-          <a class="nav-link" href="#">Nota dos Alunos</a>
-        </li>
-        @endif
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/remove/aluno/{{$curso->id}}/{{'vazio'}}/{{0}}">Desmatricular-se</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
@@ -159,17 +145,6 @@
 <div class="nav-scroller bg-body shadow-sm">
   <nav class="nav" aria-label="Secondary navigation">
     <a class="nav-link active" aria-current="page" href="/home">Voltar</a>
-    <a class="nav-link" href="#">
-      Friends
-      <span class="badge text-bg-light rounded-pill align-text-bottom">27</span>
-    </a>
-    <a class="nav-link" href="#">Explore</a>
-    <a class="nav-link" href="#">Suggestions</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
-    <a class="nav-link" href="#">Link</a>
   </nav>
 </div>
 
@@ -178,14 +153,14 @@
     <img class="me-3" src= {{ asset($img) }} alt="" width="48" height="38">
     <div class="lh-1">
       <h1 class="h6 mb-0 text-white lh-1">Professor</h1>
-    @if($curso->docentes!=NULL)
+    @if($curso->docentes!=NULL )
       <small>{{$curso->docentes}}</small>
-      @if($user->identificador==2)
+      @if($user->identificador==2 or $user->identificador==3)
       <small><a class="nav-link" href="/remove/aluno/{{$curso->id}}/{{$curso->docentes}}/{{1}}">Remover</a></small>
       @endif
     @else
       <small>Sem atribuição de professor até o momento!</small>
-      @if($user->identificador==2)
+      @if($user->identificador==2 or $user->identificador==3)
       <small><a  class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Adicionar professor</a>
           <ul class="dropdown-menu">
             @foreach($profLivres as $aux)
@@ -208,43 +183,28 @@
     <div class="d-flex text-muted pt-3">
 
   </div>
-@if($user->identificador==0 and $matriculado==1)
+@if($user->identificador==0 and $matriculado==1 or $user->identificador==3)
   <div class="my-3 p-3 bg-body rounded shadow-sm">
-    <h6 class="border-bottom pb-2 mb-0">Notas</h6>
+    <h6 class="border-bottom pb-2 mb-0">Minha média</h6>
     <div class="d-flex text-muted pt-3">
-      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-
       <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
         <div class="d-flex justify-content-between">
-          <strong class="text-gray-dark">Prova 1</strong>
+          <strong class="text-gray-dark">{{$minhaMedia}}</strong>
 
         </div>
-        <span class="d-block">@username</span>
+        @if($minhaMedia>=5)
+        <span class="d-block">Aprovado</span>
+        @else
+        <span class="d-block">Reprovado</span>
+        @endif
       </div>
     </div>
-    <div class="d-flex text-muted pt-3">
-      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-    </div>
-      <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-        <div class="d-flex justify-content-between">
-          <strong class="text-gray-dark">Atividade</strong>
-        </div>
-        <span class="d-block">@username</span>
-      </div>
-    </div>
-    <div class="d-flex text-muted pt-3">
-      <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-      </div>
-      <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-        <div class="d-flex justify-content-between">
-          <strong class="text-gray-dark">Prova 2</strong>
-          
-        </div>
-        <span class="d-block">@username</span>
-      </div>
+    
     </div>
   </div>
-@elseif($user->identificador==1 and $matriculado==1)
+@endif
+
+@if($user->identificador==1 and $matriculado==1 or $user->identificador==3)
   @if($aux==0)
   <form method="GET" action="/medias/{{$curso->id}}/{{1}}">
   @else
@@ -281,7 +241,9 @@
     </tbody>
     </div> 
     </form> 
-@elseif($user->identificador==2)
+@endif
+
+@if($user->identificador==2 or $user->identificador==3)
   <div class="my-3 p-3 bg-body rounded shadow-sm">
   <h6 class="border-bottom pb-2 mb-0">% de aprovados: {{$situação[0]}}%</h6>
   <h6 class="border-bottom pb-2 mb-0">% de reprovados: {{$situação[1]}}%</h6>

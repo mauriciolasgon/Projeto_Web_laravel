@@ -80,8 +80,6 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
-          <h4 class="text-white">Filmes favoritos</h4>
-          <p class="text-muted">{{$user->filmes}}</p>
           @if($user->identificador==0)
           <h4 class="text-white">Filmes favoritos</h4>
           <p class="text-muted">{{$user->filmes}}</p>
