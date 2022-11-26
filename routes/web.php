@@ -19,9 +19,6 @@ use App\Http\Controllers\CursoController;
 */
 
 Route::get('/',[UsuarioController::class,'welcome']);
-Route::get('/a',[UsuarioController::class,'index'])->name('welcome');
-Route::get('/Materias/{materia}', [UsuarioController::class, 'show'])->name('materia');
-Route::get('/Alunos/{aluno}', [UsuarioController::class, 'show_aluno'])->name('aluno');
 
 // Rotas de registro
 Route::get('/registro/{aux}',[UsuarioController::class,'verifica'])->name('registro');
@@ -43,18 +40,23 @@ Route::get('/users',[HomeController::class,'showIntegrantesView']);
 //encerra matricula
 Route::get('/encerra/matricula/{cursoid}/{indicador}',[CursoController::class,'encerraMateria']);
 
-# Inscrever alunos no curso
+// Inscrever alunos no curso
 Route::get('/add/aluno/{cursoid}/{user}/{aux}',[CursoController::class,'AddAlunos'])->name('add.aluno');
 
-# Redefinir senha
+// Redefinir senha
 Route::get('/redefinir/blade',[App\Http\Controllers\HomeController::class,'redefinirBlade']);
 Route::post('/show/redefinir',[App\Http\Controllers\HomeController::class,'redefinirBlade'])->name('show.reset');
 Route::post('/redefinir/senha',[App\Http\Controllers\HomeController::class,'redefinirSenha'])->name('redefinir.senha');
 
-# Remover alunos do curso
+
+// Atualiza cadastro
+Route::get('/ver/cadastro/{aux}',[HomeController::class,'atualizaCadastro']);
+Route::post('/atualiza/cadastro/{aux}',[HomeController::class,'atualizaCadastro'])->name('atualiza.cadastro');
+
+// Remover alunos do curso
 Route::get('/remove/aluno/{cursoId}/{user}/{aux}',[CursoController::class,'removeAlunos'])->name('remove.aluno');
 
-# Register curso
+// Register curso
 Route::get('/register/curso',[HomeController::class,'showRegisterCursoView']);
 
 Auth::routes();

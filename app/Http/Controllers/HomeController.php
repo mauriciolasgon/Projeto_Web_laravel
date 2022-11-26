@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Curso;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Imagen;
+use App\Models\Avatar;
 
 class HomeController extends Controller
 {
@@ -87,6 +89,7 @@ class HomeController extends Controller
     // Secretaria cria usuario
     public function criaUser(Request $data)
     {
+        $aux=0;
         if($data['profissao']=='Aluno') {
              User::create([
                 'name' => $data['name'],
@@ -97,15 +100,14 @@ class HomeController extends Controller
                 'rua' =>$data['rua'],
                 'cidade' =>$data['cidade'],
                 'bairro' =>$data['bairro'],
-                'estado' =>$data['estado'],
-                'cursos' =>'vazio',
+                'estado' =>$data['estado'],               
                 'identificador' =>0,
                 'matriculas'=>0,
                 'avatar'=>NULL,
                 'password' => Hash::make($data['password']),
             ]);
         }
-        elseif($data['profissao']=='Professor')  
+        elseif($data['profissao']=='Professor')  {
                  User::create([
                 'name' => $data['name'],
                 'CPF' => $data['CPF'],
@@ -114,25 +116,28 @@ class HomeController extends Controller
                 'rua' =>$data['rua'],
                 'cidade' =>$data['cidade'],
                 'bairro' =>$data['bairro'],
-                'estado' =>$data['estado'],
-                'cursos' =>'vazio',
+                'estado' =>$data['estado'],                
                 'identificador' =>1,
                 'filmes'=>NULL,
                 'avatar'=>$data['avatar'],
                 'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
+        }
         else
+        {   
                 // aux determina para onde devo ser direcionado
                 $aux=1;
                 Curso::create([
                 'curso' => $data['name'],
                 'descriçao_simplificada' => $data['ds'],
                 'descrição_completa' => $data['dc'],
+                'path'=>$data['imagem'],
                 'alunos' =>NULL,
                 'docentes' =>NULL,
                 'aberto_fechado'=>0,
         ]);
+        }
         if($aux==1)
         {
             return redirect('/home');  
@@ -142,7 +147,33 @@ class HomeController extends Controller
 
     public function showUserCursos($userMatriculas,$medias)
     {   
-        $cursos=Curso::all();
+        // medias verificia se o acesso é do prof,adm ou aluno
+        // medias poder ser um array(alunos) como também um único valor(prof e adm)
+        if($medias==1)
+        {
+            $cursos=Curso::all();
+
+            // pega os cursos do usuario
+            // e a media do usuario em cada curso
+            $userMatriculas=explode(';',$userMatriculas);
+            $meusCursos=[];
+            foreach($userMatriculas as $matriculas)
+            {
+                foreach($cursos as $curso)
+                {
+                    if($matriculas==$curso->id)
+                    {
+                        array_push($meusCursos,$curso);
+
+                    }
+                }    
+            }
+    
+        return view('userCurso',['medias'=>$medias,'cursos'=>$meusCursos]);
+        }
+        elseif($medias!=1 and $medias!=3)
+        {
+            $cursos=Curso::all();
 
         // pega os cursos do usuario
         // e a media do usuario em cada curso
@@ -166,10 +197,20 @@ class HomeController extends Controller
                     array_push($meusCursos,$curso);
 
                 }
-            }    
+            }
+            
         }
 
         return view('userCurso',['medias'=>$minhasMedias,'cursos'=>$meusCursos]);
+        }
+        else
+        {
+            $cursos=Curso::all();
+                
+    
+            return view('userCurso',['medias'=>$medias,'cursos'=>$cursos]);
+        }   
+
     }
 
         //VÊ todoos os usuarios
@@ -191,8 +232,72 @@ class HomeController extends Controller
         }
         return view('Alunos.aluno',['alunos'=>$alunos,'profs'=>$profs]);
     }
+    
     public function showRegisterCursoView()
     {
-        return view('auth/registerCurso');
+        $imagens=Imagen::all();
+        return view('auth/registerCurso',['imagens'=>$imagens]);
+    }
+
+    public function atualizaCadastro(Request $data,$aux)
+    {
+        // aux verifica se estou apenas vendo os dados ou se estou alterando
+        $user=Auth::user();
+        $avatares=Avatar::all();
+        if($aux==0 or $aux==1)
+        {
+            return view('auth/atualizaCadastro',['aux'=>$aux,'user'=>$user,'avatares'=>$avatares]);
+        }
+        elseif($aux==2)
+        {
+            if($user->identificador==0)
+            {
+                User::find($user->id)->update([
+                    'name' => $data['name'],
+                    'CPF' => $data['CPF'],
+                    'email' => $data['email'],
+                    'cep' =>$data['cep'],
+                    'rua' =>$data['rua'],
+                    'cidade' =>$data['cidade'],
+                    'bairro' =>$data['bairro'],
+                    'estado' =>$data['estado'],
+                    'filmes'=>$data['filmes'],
+    
+                ]);
+            }
+            elseif($user->identificador==1)
+            {
+                User::find($user->id)->update([
+                    'name' => $data['name'],
+                    'CPF' => $data['CPF'],
+                    'email' => $data['email'],
+                    'cep' =>$data['cep'],
+                    'rua' =>$data['rua'],
+                    'cidade' =>$data['cidade'],
+                    'bairro' =>$data['bairro'],
+                    'estado' =>$data['estado'],
+                    'avatar'=>$data['avatar'],
+    
+                ]);
+
+            }
+            else
+            {
+                User::find($user->id)->update([
+                    'name' => $data['name'],
+                    'CPF' => $data['CPF'],
+                    'email' => $data['email'],
+                    'cep' =>$data['cep'],
+                    'rua' =>$data['rua'],
+                    'cidade' =>$data['cidade'],
+                    'bairro' =>$data['bairro'],
+                    'estado' =>$data['estado'],
+    
+                ]);
+
+            }
+            return redirect('/ver/cadastro/0');
+            
+        }
     }
 }
