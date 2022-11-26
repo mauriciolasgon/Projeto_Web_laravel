@@ -191,7 +191,7 @@
                   <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Mínimo de alunos não atingido!</button>
-                  @elseif($NumParticipantes[$i]>'10')
+                  @elseif($NumParticipantes[$i]>='10')
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
                   @else

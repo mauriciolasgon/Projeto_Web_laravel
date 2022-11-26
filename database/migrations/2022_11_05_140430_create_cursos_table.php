@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('curso');
-            $table->string('descriçao_simplificada');
-            $table->string('descrição_completa');
+            $table->text('descriçao_simplificada');
+            $table->text('descrição_completa');
             $table->string('alunos')->nullable()->index(); 
             $table->string('docentes')->nullable()->index();
             $table->string('aberto_fechado');
