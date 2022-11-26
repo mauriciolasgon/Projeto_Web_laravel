@@ -42,31 +42,34 @@ class CursoController extends Controller
             $salto=0;
             if($usuario->id == $user->id)
             {
+                $minhaMedia=0;
                 $matriculas=$usuario->matriculas;
-                $minhaMedia=$user->medias;
-                $minhaMedia=explode(":",$minhaMedia);
-                if(count($minhaMedia)==2)
+                $minhasMedias=$user->medias;
+                $minhasMedias=explode(":",$minhasMedias);
+                if(count($minhasMedias)==2)
                     {
                         $numeroSaltos=1;
                     }
                 else
                 {
-                    $numeroSaltos=(count($minhaMedia)/2);
+                    $numeroSaltos=(count($minhasMedias)/2);
                 }
                     // percorre o vetor somento nos indices pares (onde esta o id do curso)
+                
                 if($user->identificador==3)
                 {
                     $minhaMedia="ADM";
                 }
                 for($j=0;$j<$numeroSaltos;$j++)
                 {
-                    if($minhaMedia[$salto]==$id)
+                    if($minhasMedias[$salto]==$id)
                     {
-
-                        $minhaMedia=$minhaMedia[$salto+1];
+                        $minhaMedia=$minhasMedias[$salto+1];
+                        
                     }
                         // pula para o próximo indice par
                     $salto+=2;
+                    
                 }
             }
             //pega alunos ou professores nao cadastrados no curso
@@ -178,7 +181,7 @@ class CursoController extends Controller
         $situação=[];
         foreach($medias as $media)
         {
-            if($media>5)
+            if($media>=5)
             {
                 $aprovados++;
             }
@@ -188,7 +191,6 @@ class CursoController extends Controller
             }
             $mediatotal=$media+$mediatotal;
         }
-
         array_push($situação,($aprovados/count($alunos))*100,($reprovados/count($alunos))*100);
         $mediatotal=$mediatotal/count($alunos);
         // mostra se a matricula do curso esta em aberto ou fechada

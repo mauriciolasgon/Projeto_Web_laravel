@@ -192,7 +192,13 @@
                 </form>
                   <button type="button" class="btn btn-sm btn-outline-secondary">Mínimo de alunos não atingido!</button>
                   @elseif($NumParticipantes[$i]>='10')
+                    @if($user->identificador==2 or $user->identificador==3)
+                    <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">View</button>
+                    </form>
+                    @else
                   <button type="submit" class="btn btn-sm btn-outline-secondary">Indisponível</button>
+                    @endif
                   <button type="button" class="btn btn-sm btn-outline-secondary">Matriculas encerradas</button>
                   @else
                   <form method="GET" action="/curso/{{$cursos[$i]->id}}/{{0}}">

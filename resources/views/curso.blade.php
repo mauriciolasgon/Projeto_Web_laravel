@@ -116,7 +116,7 @@
     @if($user->identificador==2 or $user->identificador==3)
         @if($indicador==1)
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Matrículas encerradas</a>
+          <a class="nav-link active" aria-current="page" href="/encerra/matricula/{{$curso->id}}/{{0}}">Abrir matrículas</a>
         </li>
         @else
         <li class="nav-item">
@@ -227,7 +227,7 @@
             @if($aux==0)
             <td>{{$medias[$i]}}</td>
             @else
-            <td><input id="name" type="number"  name="{{$i}}" value="{{ $medias[$i] }}"></td>
+            <td><input id="name" type="number" step="0.01" name="{{$i}}" value="{{ $medias[$i] }}"></td>
             @endif
           </tr>
           
