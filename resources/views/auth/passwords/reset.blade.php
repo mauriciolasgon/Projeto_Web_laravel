@@ -8,7 +8,8 @@
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
+                @if($user->email!=$aux)
+                    <form method="POST" action="{{ route('show.reset') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="">
@@ -25,8 +26,15 @@
                                     </span>
                                 @enderror
                             </div>
+                            <button type="submit" class="btn btn-primary">
+                                    {{ __('Verificar email') }}
+                            </button>
                         </div>
-
+                    </form>
+                    @endif
+                    @if($user->email==$aux)
+                    <form method="POST" action="{{ route('redefinir.senha') }}">
+                        @csrf
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -57,6 +65,8 @@
                             </div>
                         </div>
                     </form>
+                    @endif
+
                 </div>
             </div>
         </div>
