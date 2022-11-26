@@ -12,6 +12,7 @@ class avatarSeeder extends Seeder
 {
     public function run()
     {
+        // avatar dos prof
         DB::table('avatars')->insert([
             "path"=>"img\avatarProf\avatar-4.jpg",
 

@@ -29,12 +29,9 @@ class usuarios extends Seeder
             'cidade'=>NULL,
             'bairro'=>NULL,
             'estado'=>NULL,
-            'cursos'=>NULL,
             'matriculas'=>NULL,
             'avatar'=>NULL,
             'medias'=>NULL,
-
-
         ]);
 
         DB::table('users')->insert([
@@ -49,13 +46,10 @@ class usuarios extends Seeder
             'cidade'=>NULL,
             'bairro'=>NULL,
             'estado'=>NULL,
-            'cursos'=>NULL,
             'matriculas'=>NULL,
             'avatar'=>NULL,
             'medias'=>NULL,
-
-
         ]);
-            //
+
     }
 }
