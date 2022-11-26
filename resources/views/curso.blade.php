@@ -124,13 +124,7 @@
         </li>
         @endif
     @endif
-      <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-            
-        <li class="nav-item">
-          <a class="nav-link" href="/integrantes/{{$curso->id}}">Pessoas</a>
-        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
           <ul class="dropdown-menu">
@@ -233,7 +227,7 @@
             @if($aux==0)
             <td>{{$medias[$i]}}</td>
             @else
-            <td><input id="name" type="number"  name="{{$i}}" value="{{ old('$i') }}"></td>
+            <td><input id="name" type="number"  name="{{$i}}" value="{{ $medias[$i] }}"></td>
             @endif
           </tr>
           

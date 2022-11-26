@@ -94,7 +94,8 @@
           <h4 class="text-white">Perfil</h4>
           <ul class="list-unstyled">
             @if($user->identificador==1)
-            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            <li><a href="/ver/cadastro/{{0}}" class="text-white">Atualizar cadastro</a></li>
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>           
             <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->identificador}}" class="text-white">Ver cursos</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
@@ -106,9 +107,7 @@
             </li>
             @endif
             @if($user->identificador==0)
-            <li><a href="redefinir/senha" class="text-white">Redefinir senha</a></li>
-            <li><a href="#" class="text-white">Ver cursos</a></li>
-            <li><a href="#" class="text-white">Email me</a></li>
+            <li><a href="/ver/cadastro/{{0}}" class="text-white">Atualizar cadastro</a></li>
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
             <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->medias}}" class="text-white">Ver cursos</a></li>
             <li><a href="{{ route('logout') }}" class="text-white" 
@@ -134,7 +133,8 @@
             </li>
             @endif
             @if($user->identificador==3)
-            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            <li><a href="/ver/cadastro/{{0}}" class="text-white">Atualizar cadastro</a></li>
+            <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>            
             <li><a href="/users" class="text-white">Ver alunos e professores</a></li>
             <li><a href="/view/cursos/{{$user->identificador}}/{{$user->identificador}}" class="text-white">Ver cursos</a></li>
             <li><a href="/register/curso" class="text-white">Criar curso</a></li>

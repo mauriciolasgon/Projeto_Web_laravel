@@ -448,6 +448,6 @@ class CursoController extends Controller
         return redirect()->back();
     }
 
-    
 
+    
 }

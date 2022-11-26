@@ -8,6 +8,7 @@ use App\Models\Curso;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Imagen;
+use App\Models\Avatar;
 
 class HomeController extends Controller
 {
@@ -148,7 +149,8 @@ class HomeController extends Controller
 
     public function showUserCursos($userMatriculas,$medias)
     {   
-        // verificia se o acesso é do prof ou do aluno
+        // medias verificia se o acesso é do prof,adm ou aluno
+        // medias poder ser um array(alunos) como também um único valor(prof e adm)
         if($medias==1)
         {
             $cursos=Curso::all();
@@ -237,5 +239,67 @@ class HomeController extends Controller
     {
         $imagens=Imagen::all();
         return view('auth/registerCurso',['imagens'=>$imagens]);
+    }
+
+    public function atualizaCadastro(Request $data,$aux)
+    {
+        // aux verifica se estou apenas vendo os dados ou se estou alterando
+        $user=Auth::user();
+        $avatares=Avatar::all();
+        if($aux==0 or $aux==1)
+        {
+            return view('auth/atualizaCadastro',['aux'=>$aux,'user'=>$user,'avatares'=>$avatares]);
+        }
+        elseif($aux==2)
+        {
+            if($user->identificador==0)
+            {
+                User::find($user->id)->update([
+                    'name' => $data['name'],
+                    'CPF' => $data['CPF'],
+                    'email' => $data['email'],
+                    'cep' =>$data['cep'],
+                    'rua' =>$data['rua'],
+                    'cidade' =>$data['cidade'],
+                    'bairro' =>$data['bairro'],
+                    'estado' =>$data['estado'],
+                    'filmes'=>$data['filmes'],
+    
+                ]);
+            }
+            elseif($user->identificador==1)
+            {
+                User::find($user->id)->update([
+                    'name' => $data['name'],
+                    'CPF' => $data['CPF'],
+                    'email' => $data['email'],
+                    'cep' =>$data['cep'],
+                    'rua' =>$data['rua'],
+                    'cidade' =>$data['cidade'],
+                    'bairro' =>$data['bairro'],
+                    'estado' =>$data['estado'],
+                    'avatar'=>$data['avatar'],
+    
+                ]);
+
+            }
+            else
+            {
+                User::find($user->id)->update([
+                    'name' => $data['name'],
+                    'CPF' => $data['CPF'],
+                    'email' => $data['email'],
+                    'cep' =>$data['cep'],
+                    'rua' =>$data['rua'],
+                    'cidade' =>$data['cidade'],
+                    'bairro' =>$data['bairro'],
+                    'estado' =>$data['estado'],
+    
+                ]);
+
+            }
+            return redirect('/ver/cadastro/0');
+            
+        }
     }
 }
