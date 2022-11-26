@@ -15,5 +15,6 @@ class Curso extends Model
         'alunos',
         'docentes',
         'aberto_fechado',
+        'path',
     ];
 }

@@ -7,7 +7,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.104.2">
     <title>List groups · Bootstrap v5.2</title>
-
+    
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/list-groups/">
 
     
@@ -18,13 +18,16 @@
     
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
     <style>
+     
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
+        
       }
 
       @media (min-width: 768px) {
@@ -70,25 +73,27 @@
         -webkit-overflow-scrolling: touch;
       }
     </style>
-
+  
     
     <!-- Custom styles for this template -->
     <link href={{ asset( "css/list-groups.css" ) }} rel="stylesheet">
   </head>
   <body>
-  <strong><a href="/home">Voltar</a></strong>
+    
+  <strong><a href="/home" class="btn btn-outline-primary">Voltar</a></strong>
   <div class="d-flex gap-5 justify-content-center">
   <div class="list-group mx-0 w-auto">
+  
   <strong>Alunos</strong>
   @foreach($alunos as $aluno)
     <label class="list-group-item d-flex gap-2">
       <span>
         {{$aluno->name}}
-        <small class="d-block text-muted">With support text underneath to add more detail</small>
+        <small class="d-block text-muted">{{$aluno->email}}</small>
       </span>
     </label>
   @endforeach
-  <a href="/cria/user/{{1}}">Adicionar aluno</a>
+  <a href="/cria/user/{{1}}" class="btn btn-outline-primary">Adicionar aluno</a>
     </div>
 
   <div class="list-group mx-0 w-auto">
@@ -97,11 +102,11 @@
     <label class="list-group-item d-flex gap-2">
       <span>
         {{$prof->name}}
-        <small class="d-block text-muted">With support text underneath to add more detail</small>
+        <small class="d-block text-muted">{{$prof->email}}</small>
       </span>
     </label>
   @endforeach
-  <a href="/cria/user/{{2}}" >Adicionar professor</a>
+  <a href="/cria/user/{{2}}" class="btn btn-outline-primary" >Adicionar professor</a>
   </div>
 </div>
       
