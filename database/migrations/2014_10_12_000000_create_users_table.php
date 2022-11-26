@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('cidade')->nullable();
             $table->string('estado')->nullable();
             $table->string('filmes')->nullable();
-            $table->string('cursos')->index()->nullable();
             $table->integer('identificador')->nullable();
             $table->string('matriculas')->nullable();
             $table->string('avatar')->nullable();

@@ -1,6 +1,11 @@
-@extends('layouts.app')
-
-@section('content')
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head> 
+<body> 
+<main class="py-4">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -22,10 +27,12 @@
                         </a>
                             
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        @foreach($imagens as $imagem)
                         <div class="col-lg-4">
-                        <img   alt="avatar">   
-                        <input id="avatar" type="checkbox"  name="avatar" value= >
+                        <img  src= {{ asset( $imagem->cursoImagem) }} alt="imagem">   
+                        <input id="imagem" type="checkbox"  name="imagem" value={{ $imagem->cursoImagem }} >
                         </div>
+                        @endforeach
                         </div>
                     </li>
                     </div>
@@ -86,3 +93,6 @@
         </div>
     </div>
 </div>
+</main>
+</body>
+</html>
