@@ -55,10 +55,17 @@ php artisan migrate:fresh --seed
 
 Acesse o projeto
 [http://localhost:8080](http://localhost:8080)
-```sh
+
 Conta para fazer login
-RA/RP=12345678
-Senha=senha
+```sh
+Secretaria
+email:secretaria@gmail.com
+Senha=123456789
+```
+```sh
+ADM
+email:adm@gmail.com
+Senha=123456789
 ```
 
 
