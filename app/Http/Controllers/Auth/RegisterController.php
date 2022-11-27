@@ -85,7 +85,8 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
             ]);
         }
-        else  
+        else
+        {
             return User::create([
                 'name' => $data['name'],
                 'CPF' => $data['CPF'],
@@ -101,6 +102,8 @@ class RegisterController extends Controller
                 'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
+        } 
+
     }
 
 }

@@ -49,7 +49,8 @@
                 @csrf
                 
                 <div class="col-lg-3">
-                <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">   
+                <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">
+                <input id="avatar"  type="hidden" name="avatar" value='img\avatarProf\avatar-padrão.png' >  
                  <h2 class="fw-normal">Avatar</h2>
                     <p></p>
                     <li class="nav-item dropdown">

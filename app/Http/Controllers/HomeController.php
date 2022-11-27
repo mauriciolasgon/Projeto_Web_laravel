@@ -90,6 +90,7 @@ class HomeController extends Controller
     public function criaUser(Request $data)
     {
         $aux=0;
+        
         if($data['profissao']=='Aluno') {
              User::create([
                 'name' => $data['name'],
@@ -107,7 +108,9 @@ class HomeController extends Controller
                 'password' => Hash::make($data['password']),
             ]);
         }
-        elseif($data['profissao']=='Professor')  {
+        
+        elseif($data['profissao']=='Professor')  
+        {               
                  User::create([
                 'name' => $data['name'],
                 'CPF' => $data['CPF'],
@@ -116,10 +119,10 @@ class HomeController extends Controller
                 'rua' =>$data['rua'],
                 'cidade' =>$data['cidade'],
                 'bairro' =>$data['bairro'],
-                'estado' =>$data['estado'],                
+                'estado' =>$data['estado'],
+                'avatar'=>$data['avatar'],                
                 'identificador' =>1,
                 'filmes'=>NULL,
-                'avatar'=>$data['avatar'],
                 'matriculas'=>0,
                 'password' => Hash::make($data['password']),
             ]);
