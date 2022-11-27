@@ -7,9 +7,9 @@
         img{
         background-color: #ddd;
         border-radius: 50%;
-        height: 200px;
+        height: 80px;
         object-fit: cover;
-        width: 200px;  
+        width: 80px;  
         }
 </style>
 </head> 
