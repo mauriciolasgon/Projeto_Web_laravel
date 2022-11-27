@@ -48,27 +48,32 @@ class avatarSeeder extends Seeder
 
         ]);
         DB::table('imagens')->insert([
-            "cursoImagem"=>"img\avatarProf\curso-2.jpg",
+            "cursoImagem"=>"img\avatarProf\c.png",
 
         ]);
         DB::table('imagens')->insert([
-            "cursoImagem"=>"img\avatarProf\curso-3.png",
+            "cursoImagem"=>"img\avatarProf\curso-hardware.jpg",
 
         ]);
         DB::table('imagens')->insert([
-            "cursoImagem"=>"img\avatarProf\curso-4.png",
+            "cursoImagem"=>"img\avatarProf\curso-python.jpg",
 
         ]);
         DB::table('imagens')->insert([
-            "cursoImagem"=>"img\avatarProf\curso-5.jpg",
+            "cursoImagem"=>"img\avatarProf\desenvolvimento-web.jpg",
 
         ]);
         DB::table('imagens')->insert([
-            "cursoImagem"=>"img\avatarProf\curso-6.jpg",
+            "cursoImagem"=>"img\avatarProf\avexcel.png",
 
         ]);
         DB::table('imagens')->insert([
-            "cursoImagem"=>"img\avatarProf\curso-7.png",
+            "cursoImagem"=>"img\avatarProf\internet-das-coisas-1.jpg",
+
+        ]);
+
+        DB::table('imagens')->insert([
+            "cursoImagem"=>"img\avatarProf\games.jpg",
 
         ]);
 
