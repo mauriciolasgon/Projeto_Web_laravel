@@ -109,7 +109,11 @@
             @if($user->identificador==0)
             <li><a href="/ver/cadastro/{{0}}" class="text-white">Atualizar cadastro</a></li>
             <li><a href="/redefinir/blade" class="text-white">Redefinir senha</a></li>
+            @if($user->medias!=NULL)
             <li><a href="/view/cursos/{{$user->matriculas}}/{{$user->medias}}" class="text-white">Ver cursos</a></li>
+            @else
+            <li><a href="/view/cursos/{{$user->matriculas}}/{{1}}" class="text-white">Ver cursos</a></li>
+            @endif
             <li><a href="{{ route('logout') }}" class="text-white" 
                   onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
