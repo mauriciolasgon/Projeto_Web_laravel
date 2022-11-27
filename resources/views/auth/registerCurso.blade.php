@@ -25,24 +25,26 @@
             
                 <form method="POST" action="{{ route('cria.users') }}">
                 @csrf
-
-                <div class="col-lg-4">
-                <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">   
-                 <h2 class="fw-normal">Imagem</h2>
-                    <p></p>
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Selecione um imagem para o curso
-                        </a>
+            <div class="col-lg-3">
+            <img  src= {{ asset('img\avatarProf\avatar-padrão.png') }} alt="avatar">
+            <input id="imagem"  type="hidden" name="imagem" value='img\avatarProf\avatar-padrão.png' >     
+             <h2 class="fw-normal">Imagem</h2>
+                <p></p>
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    Selecione um imagem para o curso
+                    </a>
                             
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        @foreach($imagens as $imagem)
-                        <div class="col-lg-4">
-                        <img  src= {{ asset( $imagem->cursoImagem) }} alt="imagem">   
-                        <input id="imagem" type="checkbox"  name="imagem" value={{ $imagem->cursoImagem }} >
-                        </div>
-                        @endforeach
-                        </div>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                @foreach($imagens as $imagem)
+                    <div class="col-lg-3">
+                    <img  src= {{ asset( $imagem->cursoImagem) }} alt="imagem">   
+                    <input id="imagem" type="checkbox"  name="imagem" value={{ $imagem->cursoImagem }} >
+                    </div>
+                @endforeach
+                </div>
+                    </li>
+                    </div>
                     </li>
                     </div>
                     <div class="row mb-3">
