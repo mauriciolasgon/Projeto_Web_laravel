@@ -8,6 +8,7 @@
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
+        
       }
 
       @media (min-width: 768px) {
@@ -52,6 +53,8 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+      
+
     </style>
 
     
@@ -63,10 +66,12 @@
   <div class="container">
   <main>
 
-  <div class="col-md-7 col-lg-8">
+ 
+  <div class="centered">
+    
   <h4 class="mb-3">Meus dados</h4>
   @if($aux==0)
-  <button type="button" class="btn btn-light"><a href="/ver/cadastro/{{1}}">Atualizar dados</a></button>
+  <button type="button" class="alert alert-primary" role="alert"><a href="/ver/cadastro/{{1}}">Atualizar dados</a></button>
   <div class="row g-3">
   @if($user->identificador==1)
   <div class="col-sm-6">
@@ -74,54 +79,74 @@
               <img  src= {{ asset( $user->avatar ) }} alt="avatar">
             </div>
   @endif
-        <div class="col-sm-6">
-              <h6 class="my-0">NOME</h6>          
+          <div class="col-sm-6">
+              <h6 class="my-0">NOME</h6>
+              <div class="alert alert-dark" role="alert">
               <h7>{{$user->name}}</h6>
+              </div>          
+              
             </div>
 
             <div class="col-sm-6">
-              <h6 class="my-0">EMAIL</h6>          
+              <h6 class="my-0">EMAIL</h6> 
+              <div class="alert alert-dark" role="alert">         
               <h7>{{$user->email}}</h6>
+              </div>
             </div>
 
 
-            <div class="col-sm-6">
-              <h6 class="my-0">CPF</h6>          
+            <div class="col-sm-6">  
+              <h6 class="my-0">CPF</h6>   
+              <div class="alert alert-dark" role="alert">                     
               <h7>{{$user->CPF}}</h6>
+              </div>
             </div>
 
             <div class="col-sm-6">
-              <h6 class="my-0">CEP</h6>          
+              <h6 class="my-0">CEP</h6>  
+              <div class="alert alert-dark" role="alert">        
               <h7>{{$user->cep}}</h6>
+              </div>
             </div>
 
             <div class="col-sm-6">
-              <h6 class="my-0">RUA</h6>          
+              <h6 class="my-0">RUA</h6>    
+              <div class="alert alert-dark" role="alert">      
               <h7>{{$user->rua}}</h6>
+              </div>
             </div>
             
             <div class="col-sm-6">
-              <h6 class="my-0">BAIRRO</h6>          
+              <h6 class="my-0">BAIRRO</h6>   
+              <div class="alert alert-dark" role="alert">       
               <h7>{{$user->bairro}}</h6>
+              </div>
             </div>
 
             <div class="col-sm-6">
-              <h6 class="my-0">CIDADE</h6>          
+              <h6 class="my-0">CIDADE</h6>  
+              <div class="alert alert-dark" role="alert">        
               <h7>{{$user->cidade}}</h6>
+              </div>
             </div>
 
             <div class="col-sm-6">
-              <h6 class="my-0">ESTADO</h6>          
+              <h6 class="my-0">ESTADO</h6>   
+              <div class="alert alert-dark" role="alert">       
               <h7>{{$user->estado}}</h6>
+              </div>
             </div>
 
             @if($user->identificador==0)
             <div class="col-sm-6">
-              <h6 class="my-0">FILMES</h6>          
+              <h6 class="my-0">FILMES</h6> 
+              <div class="alert alert-dark" role="alert">         
               <h7>{{$user->filmes}}</h6>
+              </div>
             </div>
             @endif
-            <a href="/home">Voltar</a>
+            <div class="col-sm-6">
+            <button type="button" class="alert alert-primary" role="alert" ><a href="/home">Voltar</a></button>
   
   @else
   <form  method="POST" action="{{ route('atualiza.cadastro',2) }}">
@@ -167,7 +192,7 @@
 
             <div class="col-12">
               <label for="cpf" class="form-label">CPF</label>
-                <input type="text" class="form-control"  name="CPF" id="cpf" placeholder="CPF" value="{{$user->CPF}}" required>
+                <input type="text" class="form-control"  name="CPF" id="cpf" placeholder="" value="{{$user->CPF}}" required>
               <div class="invalid-feedback">
                   CPF inválido
                 </div>
@@ -191,20 +216,20 @@
 
             <div class="col-12">
               <label for="bairro" class="form-label">Bairro</label>
-              <input type="text" class="form-control" name="bairro" id="bairro" value="{{$user->bairro}}" placeholder="Apartment or suite">
+              <input type="text" class="form-control" name="bairro" id="bairro" value="{{$user->bairro}}" placeholder="">
             </div>
 
             <div class="col-md-5">
               <label for="cidade" class="form-label">Cidade</label>
-              <input type="text" class="form-control"  name="cidade" id="cidade" value="{{$user->cidade}}" placeholder="Apartment or suite">
+              <input type="text" class="form-control"  name="cidade" id="cidade" value="{{$user->cidade}}" placeholder="">
               <div class="invalid-feedback">
-                Please select a valid country.
+                Coloque um pais valido.
               </div>
             </div>
 
             <div class="col-md-4">
               <label for="estado" class="form-label">Estado</label>
-              <input type="text" class="form-control"  name="estado"id="estado" value="{{$user->estado}}" placeholder="Apartment or suite">
+              <input type="text" class="form-control"  name="estado"id="estado" value="{{$user->estado}}" placeholder="">
               <div class="invalid-feedback">
                 Insira um estado válido
               </div>
@@ -213,7 +238,7 @@
             @if($user->identificador==0)
             <div class="col-md-3">
               <label for="filmes" class="form-label">Filmes</label>
-              <input type="text" class="form-control" name="filmes" id="filmes" value="{{$user->filmes}}" placeholder="Apartment or suite">
+              <input type="text" class="form-control" name="filmes" id="filmes" value="{{$user->filmes}}" placeholder="">
               <div class="invalid-feedback">
                 Digite seus filmes favoritos
               </div>
