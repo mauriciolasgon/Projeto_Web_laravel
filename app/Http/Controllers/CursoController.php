@@ -450,6 +450,55 @@ class CursoController extends Controller
         return redirect()->back();
     }
 
+    public function removeUser($userid,$aux)
+    {
+        // primeiro retira-se o usuario do curso e depois ele é deletado do banco
+        // aux determina se o usuário deletado foi um aluno(aux=0) ou professor(aux=1)
+
+        $cursos=Curso::all();
+        $users=User::all();
+        foreach($users as $us)
+        {
+            if($us->id==$userid)
+            {
+                $user=$us;
+            }
+        }
+
+        foreach($cursos as $curso)
+        {
+            if($aux==0)
+            {
+                $alunos=$curso->alunos;
+                $alunos=explode(";",$alunos);
+                for($i=0;$i<count($alunos);$i++)
+                {
+                    if($alunos[$i]==$user->name)
+                    {
+                        unset($alunos[$i]);
+                        $alunos=implode(";",$alunos);
+                        Curso::find($curso->id)->update(['alunos' =>$alunos]);
+    
+                    }
+                }
+
+            }
+            else
+            {
+                $prof=$curso->docentes;              
+                if($prof==$user->name)
+                {
+                    Curso::find($curso->id)->update(['docentes' =>NULL]);
+    
+                }
+            }
+        }
+           
+        User::where('id', $userid)->firstorfail()->delete();            
+        return redirect()->back();
+        
+
+    }
 
     
 }

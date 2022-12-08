@@ -82,8 +82,8 @@
     
   <strong><a href="/home" class="btn btn-outline-primary">Voltar</a></strong>
   <div class="d-flex gap-5 justify-content-center">
+
   <div class="list-group mx-0 w-auto">
-  
   <strong>Alunos</strong>
   @foreach($alunos as $aluno)
     <label class="list-group-item d-flex gap-2">
@@ -91,6 +91,7 @@
         {{$aluno->name}}
         <small class="d-block text-muted">{{$aluno->email}}</small>
       </span>
+      <a class="text-danger" href="/remove/user/{{$aluno->id}}/{{0}}">Remover aluno</a>
     </label>
   @endforeach
   <a href="/cria/user/{{1}}" class="btn btn-outline-primary">Adicionar aluno</a>
@@ -104,6 +105,7 @@
         {{$prof->name}}
         <small class="d-block text-muted">{{$prof->email}}</small>
       </span>
+      <a class="text-danger" href="/remove/user/{{$prof->id}}/{{1}}">Remover professor</a>
     </label>
   @endforeach
   <a href="/cria/user/{{2}}" class="btn btn-outline-primary" >Adicionar professor</a>

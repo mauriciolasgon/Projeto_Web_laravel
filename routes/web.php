@@ -43,6 +43,9 @@ Route::get('/encerra/matricula/{cursoid}/{indicador}',[CursoController::class,'e
 // Inscrever alunos no curso
 Route::get('/add/aluno/{cursoid}/{user}/{aux}',[CursoController::class,'AddAlunos'])->name('add.aluno');
 
+// Remove alunos do banco de dados
+Route::get('/remove/user/{userid}/{aux}',[CursoController::class,'removeUser'])->name('remove.user');
+
 // Redefinir senha
 Route::get('/redefinir/blade',[App\Http\Controllers\HomeController::class,'redefinirBlade']);
 Route::post('/show/redefinir',[App\Http\Controllers\HomeController::class,'redefinirBlade'])->name('show.reset');
