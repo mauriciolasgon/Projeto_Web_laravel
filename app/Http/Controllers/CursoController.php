@@ -457,6 +457,7 @@ class CursoController extends Controller
 
         $cursos=Curso::all();
         $users=User::all();
+        
         foreach($users as $us)
         {
             if($us->id==$userid)
@@ -470,18 +471,21 @@ class CursoController extends Controller
             if($aux==0)
             {
                 $alunos=$curso->alunos;
-                $alunos=explode(";",$alunos);
-                for($i=0;$i<count($alunos);$i++)
+               
+                $allunos=explode(";",$alunos);
+                
+                for($i=0;$i<count($allunos);$i++)
                 {
-                    if($alunos[$i]==$user->name)
+                    if($allunos[$i]==$user->name)
                     {
-                        unset($alunos[$i]);
-                        $alunos=implode(";",$alunos);
+                        unset($allunos[$i]);
+                        $alunos=implode(";",$allunos);
+                        
                         Curso::find($curso->id)->update(['alunos' =>$alunos]);
     
                     }
                 }
-
+                
             }
             else
             {
